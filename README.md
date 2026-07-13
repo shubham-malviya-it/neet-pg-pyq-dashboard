@@ -15,7 +15,7 @@ Every extractable question from the previous papers is parsed and classified int
 - **Question browser** — search all ~3,300 parsed questions by subject, topic, year, or keyword.
 - **Papers library** — direct links to all question papers and solutions (2010–2025).
 - **2026 syllabus explorer** — all 19 subjects across the three curriculum blocks, linked to the official NBEMS Information Bulletin.
-- **2026 predictions** — an external 180 high-yield-topic forecast (priority + past-repetition per topic), plus a diverging chart comparing the forecast's subject emphasis against the actual historical PYQ share.
+- **2026 predictions** — an external 180 high-yield-topic forecast (priority + past-repetition per topic), plus a diverging chart comparing the forecast's subject emphasis against the actual historical PYQ share. Click a subject → a topic to reveal hand-compiled high-yield revision sub-topics for that topic (from `notes.js`).
 
 ## Files
 
@@ -23,6 +23,7 @@ Every extractable question from the previous papers is parsed and classified int
 |------|---------|
 | `index.html` | The dashboard — a single self-contained page (inline CSS/JS, no CDN). |
 | `data.js` | Generated analysis consumed by the dashboard. |
+| `notes.js` | Hand-compiled high-yield revision sub-topics for all 180 predicted topics (Predictions tab drill-down). |
 | `build_analysis.py` | The pipeline: extracts questions from the PDFs, classifies subject + topic, emits `data.js`. |
 | `NEET-PG-2025-Recall-Questions.md` | Student-recall question set used for 2025 (the exam is memory-based). |
 | `NEET-PG-2026-Predicted-Topics.pdf` | External 180 high-yield-topic forecast, parsed into the Predictions tab. |

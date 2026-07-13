@@ -229,8 +229,20 @@
   /* topic list inside an expanded prediction bar */
   .pred-detail{margin:2px 8px 10px; border:1px solid var(--border); border-radius:12px; background:var(--surface-2); padding:8px 10px;
     animation:fade .25s ease}
-  .ptopic{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:11px; padding:7px 8px; border-radius:8px}
-  .ptopic:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+  .ptopic-wrap{border-radius:8px}
+  .ptopic-wrap.open{background:color-mix(in srgb,var(--sec-pre) 8%,transparent)}
+  .ptopic{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:11px; padding:7px 8px; border-radius:8px}
+  .ptopic.has-notes{cursor:pointer}
+  .ptopic.has-notes:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+  .ptopic .pt-caret{color:var(--muted); font-size:10px; transition:transform .2s}
+  .ptopic-wrap.open .pt-caret{transform:rotate(90deg); color:var(--sec-pre)}
+  .subtopics{display:none; padding:2px 10px 12px 40px}
+  .ptopic-wrap.open .subtopics{display:block; animation:fade .2s ease}
+  .subtopics .st-head{font-size:11px; font-weight:800; letter-spacing:.03em; text-transform:uppercase;
+    color:var(--muted); margin:2px 0 7px}
+  .subtopics ul{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:5px}
+  .subtopics li{font-size:13px; line-height:1.5; color:var(--ink-2)}
+  .subtopics li::marker{color:var(--sec-pre)}
   .ptopic .pt-name{font-size:13.5px; font-weight:550}
   .prio-pill{font-size:10.5px; font-weight:800; letter-spacing:.02em; padding:3px 8px; border-radius:999px; color:#fff; min-width:66px; text-align:center}
   .prio-pill.High{background:#e34948} .prio-pill.Moderate{background:#eda100} .prio-pill.Low{background:var(--muted)}
@@ -459,6 +471,7 @@
 </div>
 
 <script src="data.js"></script>
+<script src="notes.js"></script>
 <script>
 const D = window.NEET_DATA;
 const SECTIONS = D.sections;
@@ -958,11 +971,27 @@ function renderPredKPIs(){
    <div class="pred-kpi"><div class="n">${pc.High}</div><div class="l">High-priority topics</div>
      <div class="prio"><i style="flex:${pc.High};background:#e34948"></i><i style="flex:${pc.Moderate};background:#eda100"></i><i style="flex:${pc.Low};background:var(--muted)"></i></div></div>`;
 }
-function predTopicRow(t,term){
+const _norm=s=>s.toLowerCase().replace(/[^a-z0-9]/g,'');
+function lookupNotes(subject,topic){
+  const N=window.NEET_NOTES; if(!N||!N[subject]) return [];
+  if(N[subject][topic]) return N[subject][topic];
+  const nt=_norm(topic);
+  for(const k in N[subject]) if(_norm(k)===nt) return N[subject][k];
+  return [];
+}
+function predTopicRow(t,term,subj){
   let name=escapeHtml(t.topic);
   if(term){ const re=new RegExp('('+term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig'); name=name.replace(re,'<mark>$1</mark>'); }
-  return `<div class="ptopic"><span class="prio-pill ${t.priority}">${t.priority}</span>
-    <span class="pt-name">${name}</span><span class="times-badge">${t.times}×</span></div>`;
+  const notes=lookupNotes(subj,t.topic);
+  const notesHtml=notes.length
+    ? `<div class="subtopics"><div class="st-head">High-yield sub-topics</div><ul>${notes.map(n=>`<li>${escapeHtml(n)}</li>`).join('')}</ul></div>` : '';
+  return `<div class="ptopic-wrap">
+    <div class="ptopic ${notes.length?'has-notes':''}">
+      <span class="prio-pill ${t.priority}">${t.priority}</span>
+      <span class="pt-name">${name}</span>
+      <span class="times-badge">${t.times}×</span>
+      ${notes.length?'<span class="pt-caret">▸</span>':'<span class="pt-caret" style="visibility:hidden">▸</span>'}
+    </div>${notesHtml}</div>`;
 }
 function renderPredBars(){
   const P=D.predictions; if(!P) return; const el=document.getElementById('pred-bars');
@@ -980,11 +1009,13 @@ function renderPredBars(){
       <div class="track"><div class="fill" style="width:${w}%;background:${secColor(s.sec)}"></div></div>
       <div class="val">${s.combined}<small>${s.topics.length} topics</small></div></div>`;
     if(!expanded) return bar;
-    const rows=(term?matches:s.topics).slice().sort((a,b)=>b.times-a.times).map(t=>predTopicRow(t,term)).join('');
+    const rows=(term?matches:s.topics).slice().sort((a,b)=>b.times-a.times).map(t=>predTopicRow(t,term,s.name)).join('');
     return bar+`<div class="pred-detail">${rows}</div>`;
   }).join('') || '<div class="qempty">No forecast topics match that search.</div>';
   el.querySelectorAll('.bar').forEach(b=>b.onclick=()=>{ if(predSearch.trim())return;
     predExpanded=predExpanded===b.dataset.sub?null:b.dataset.sub; renderPredBars(); });
+  el.querySelectorAll('.ptopic.has-notes').forEach(row=>row.onclick=e=>{
+    e.stopPropagation(); row.closest('.ptopic-wrap').classList.toggle('open'); });
 }
 function renderTopTopics(){
   const P=D.predictions; if(!P) return;
