@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -432,7 +432,7 @@ function applyTheme(t){ document.documentElement.setAttribute('data-theme',t); l
 themeBtn.onclick = ()=>{ const cur=document.documentElement.getAttribute('data-theme')
     || (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
   applyTheme(cur==='dark'?'light':'dark'); };
-(function(){ const s=localStorage.getItem('neet-theme'); if(s) document.documentElement.setAttribute('data-theme',s); })();
+(function(){ const s=localStorage.getItem('neet-theme')||'dark'; document.documentElement.setAttribute('data-theme',s); })();
 
 /* ---------- tabs ---------- */
 document.getElementById('tabs').addEventListener('click',e=>{
