@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEET-PG PYQ Analytics · 2010–2025 & 2026 Syllabus</title>
+<style>
+  :root{
+    --plane:#f9f9f7; --surface:#fcfcfb; --surface-2:#ffffff;
+    --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+    --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+    --sec-pre:#2a78d6; --sec-para:#1baf7a; --sec-clin:#4a3aa7;
+    --good:#0ca30c; --shadow:0 1px 2px rgba(11,11,11,.05),0 8px 24px -12px rgba(11,11,11,.12);
+    --radius:14px;
+  }
+  :root[data-theme="dark"]{
+    --plane:#0d0d0d; --surface:#1a1a19; --surface-2:#211f1e;
+    --ink:#ffffff; --ink-2:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+    --sec-pre:#3987e5; --sec-para:#199e70; --sec-clin:#9085e9;
+    --good:#0ca30c; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -12px rgba(0,0,0,.6);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --plane:#0d0d0d; --surface:#1a1a19; --surface-2:#211f1e;
+      --ink:#ffffff; --ink-2:#c3c2b7; --muted:#898781;
+      --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+      --sec-pre:#3987e5; --sec-para:#199e70; --sec-clin:#9085e9;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -12px rgba(0,0,0,.6);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--plane); color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--sec-pre); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 20px 72px}
+
+  /* header */
+  header{
+    position:sticky; top:0; z-index:20; background:color-mix(in srgb,var(--plane) 88%,transparent);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--border);
+  }
+  .hrow{max-width:1180px; margin:0 auto; padding:14px 20px; display:flex; align-items:center; gap:16px}
+  .brand{display:flex; align-items:center; gap:11px; font-weight:700; letter-spacing:-.01em}
+  .logo{width:34px; height:34px; border-radius:9px; display:grid; place-items:center;
+    background:linear-gradient(135deg,var(--sec-pre),var(--sec-clin)); color:#fff; font-size:17px; flex:none}
+  .brand small{display:block; font-weight:500; color:var(--ink-2); font-size:12px; letter-spacing:0}
+  .spacer{flex:1}
+  nav.tabs{display:flex; gap:2px; background:var(--surface); border:1px solid var(--border);
+    border-radius:11px; padding:3px}
+  nav.tabs button{border:0; background:none; color:var(--ink-2); font:inherit; font-size:13.5px;
+    font-weight:600; padding:7px 13px; border-radius:8px; cursor:pointer; white-space:nowrap}
+  nav.tabs button.on{background:var(--surface-2); color:var(--ink); box-shadow:var(--shadow)}
+  .iconbtn{border:1px solid var(--border); background:var(--surface); color:var(--ink);
+    width:38px; height:38px; border-radius:10px; cursor:pointer; font-size:16px; flex:none}
+
+  /* hero */
+  .hero{padding:34px 0 10px}
+  .hero h1{font-size:clamp(26px,4.2vw,40px); line-height:1.08; letter-spacing:-.02em; margin:0 0 10px}
+  .hero p{max-width:640px; color:var(--ink-2); margin:0; font-size:15.5px}
+  .est{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600;
+    color:var(--ink-2); background:var(--surface); border:1px solid var(--border);
+    padding:4px 10px; border-radius:999px; margin-top:14px}
+  .est::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--sec-para)}
+
+  /* kpi */
+  .kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:26px 0 10px}
+  .kpi{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:18px; box-shadow:var(--shadow)}
+  .kpi .n{font-size:30px; font-weight:750; letter-spacing:-.02em; line-height:1}
+  .kpi .l{color:var(--ink-2); font-size:13px; margin-top:7px}
+  .kpi .sub{color:var(--muted); font-size:11.5px; margin-top:3px}
+  .kpi.countdown .n{color:var(--sec-pre)}
+
+  section.panel{background:var(--surface); border:1px solid var(--border); border-radius:18px;
+    padding:22px 22px 8px; box-shadow:var(--shadow); margin-top:20px}
+  .phead{display:flex; align-items:flex-start; gap:14px; flex-wrap:wrap; margin-bottom:6px}
+  .phead h2{font-size:18px; letter-spacing:-.01em; margin:0}
+  .phead p{margin:4px 0 0; color:var(--ink-2); font-size:13.5px; max-width:560px}
+  .phead .spacer{flex:1}
+  .legend{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
+  .lg{display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink-2); font-weight:600;
+    background:none; border:0; cursor:pointer; padding:2px}
+  .lg .sw{width:11px; height:11px; border-radius:3px; flex:none}
+  .lg.off{opacity:.38}
+
+  /* bar chart */
+  .bars{padding:8px 0 16px; display:flex; flex-direction:column; gap:3px}
+  .bar{display:grid; grid-template-columns:150px 1fr auto; align-items:center; gap:12px;
+    padding:5px 8px; border-radius:9px; cursor:pointer}
+  .bar:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+  .bar.sel{background:color-mix(in srgb,var(--sec-pre) 12%,transparent)}
+  .bar .name{font-size:13px; font-weight:600; text-align:right; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .bar .track{height:22px; position:relative}
+  .bar .fill{height:100%; border-radius:0 5px 5px 0; min-width:3px; transition:width .5s cubic-bezier(.2,.7,.2,1)}
+  .bar .val{font-size:12.5px; font-weight:700; font-variant-numeric:tabular-nums; color:var(--ink)}
+  .bar .val small{color:var(--muted); font-weight:600; margin-left:5px}
+  @media (max-width:640px){ .bar{grid-template-columns:104px 1fr auto} .bar .name{font-size:12px} }
+
+  /* svg trend */
+  .chartbox{position:relative; padding:6px 0 4px}
+  svg.trend{width:100%; height:auto; display:block; overflow:visible}
+  .tt{position:absolute; pointer-events:none; background:var(--surface-2); border:1px solid var(--border);
+    box-shadow:var(--shadow); border-radius:11px; padding:10px 12px; font-size:12.5px; min-width:150px;
+    opacity:0; transition:opacity .12s; z-index:5}
+  .tt h4{margin:0 0 6px; font-size:12px; color:var(--muted); font-weight:700; letter-spacing:.02em}
+  .tt .r{display:flex; align-items:center; gap:8px; margin:3px 0}
+  .tt .r .sw{width:9px; height:9px; border-radius:2px; flex:none}
+  .tt .r .k{flex:1; color:var(--ink-2)}
+  .tt .r .v{font-weight:700; font-variant-numeric:tabular-nums}
+  .seg{display:inline-flex; background:var(--surface-2); border:1px solid var(--border); border-radius:9px; padding:3px}
+  .seg button{border:0; background:none; font:inherit; font-size:12.5px; font-weight:600; color:var(--ink-2);
+    padding:5px 11px; border-radius:6px; cursor:pointer}
+  .seg button.on{background:var(--sec-pre); color:#fff}
+
+  /* papers library */
+  .papers{display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr)); gap:14px; padding:10px 0 18px}
+  .pcard{background:var(--surface-2); border:1px solid var(--border); border-radius:14px; padding:16px;
+    display:flex; flex-direction:column; gap:12px}
+  .pcard .yr{font-size:22px; font-weight:750; letter-spacing:-.02em}
+  .pcard .qn{font-size:12.5px; color:var(--ink-2)}
+  .pcard .qn b{color:var(--ink); font-weight:700}
+  .pcard .links{display:flex; flex-direction:column; gap:7px; margin-top:auto}
+  .plink{display:flex; align-items:center; gap:9px; font-size:13px; font-weight:600; padding:8px 11px;
+    border-radius:9px; border:1px solid var(--border); color:var(--ink); background:var(--surface)}
+  .plink:hover{text-decoration:none; border-color:var(--sec-pre); color:var(--sec-pre)}
+  .plink.mut{opacity:.5; pointer-events:none}
+  .plink .ic{font-size:14px}
+  .plink .go{margin-left:auto; color:var(--muted); font-size:12px}
+
+  /* inline bar detail (expand-on-click) */
+  .bar .name{position:relative}
+  .bar .caretb{color:var(--muted); font-size:10px; margin-right:5px; transition:transform .2s; display:inline-block}
+  .bar.sel .caretb{transform:rotate(90deg); color:var(--sec-pre)}
+  .bar-detail{margin:2px 8px 10px; border:1px solid var(--border); border-radius:12px; background:var(--surface-2);
+    padding:15px 16px; display:grid; grid-template-columns:220px 1fr; gap:20px; align-items:center;
+    animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+  .bar-detail .spark{width:100%; height:auto; display:block}
+  .stat-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(96px,1fr)); gap:12px 18px}
+  .stat{display:flex; flex-direction:column; gap:2px}
+  .stat .v{font-size:19px; font-weight:750; letter-spacing:-.01em; font-variant-numeric:tabular-nums}
+  .stat .k{font-size:11.5px; color:var(--muted); font-weight:600}
+  .stat .v.up{color:var(--good)} .stat .v.down{color:#d03b3b}
+  .bd-topics{grid-column:1/-1; border-top:1px solid var(--border); padding-top:13px; margin-top:3px}
+  .bd-topics .th{font-size:11.5px; color:var(--muted); font-weight:700; margin-bottom:9px; letter-spacing:.02em;
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+  .bd-topics .th a{font-weight:600}
+  .tgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:7px 18px}
+  .trow{display:grid; grid-template-columns:1fr auto; align-items:center; gap:9px; font-size:12.5px}
+  .trow .tn{color:var(--ink-2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .trow .tt2{display:flex; align-items:center; gap:8px}
+  .trow .tbar{width:52px; height:6px; border-radius:3px; background:var(--grid); overflow:hidden}
+  .trow .tbar i{display:block; height:100%; border-radius:3px}
+  .trow .tv{font-weight:700; font-variant-numeric:tabular-nums; min-width:20px; text-align:right}
+  @media (max-width:640px){ .bar-detail{grid-template-columns:1fr} }
+
+  /* insight strip (movers) */
+  .insights{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px}
+  .icard{background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:18px 20px; box-shadow:var(--shadow)}
+  .icard h3{margin:0 0 3px; font-size:14px; display:flex; align-items:center; gap:8px}
+  .icard .hint{color:var(--ink-2); font-size:12.5px; margin:0 0 12px}
+  .mover{display:flex; align-items:center; gap:11px; padding:7px 0; border-top:1px solid var(--border)}
+  .mover:first-of-type{border-top:0}
+  .mover .mname{font-weight:650; font-size:13.5px; flex:1}
+  .mover .arrow{font-weight:800; font-size:13px; font-variant-numeric:tabular-nums}
+  .mover .arrow.up{color:var(--good)} .mover .arrow.down{color:#d03b3b}
+  .mover .from{color:var(--muted); font-size:12px; font-variant-numeric:tabular-nums}
+  @media (max-width:720px){ .insights{grid-template-columns:1fr} }
+
+  /* coverage callout */
+  .coverage{display:flex; align-items:center; gap:20px; flex-wrap:wrap; background:var(--surface-2);
+    border:1px solid var(--border); border-radius:14px; padding:16px 20px; margin:2px 0 16px}
+  .coverage .big{font-size:34px; font-weight:800; letter-spacing:-.02em; color:var(--sec-pre); line-height:1}
+  .coverage .ctext{font-size:13.5px; color:var(--ink-2); flex:1; min-width:220px}
+  .coverage .ctext b{color:var(--ink)}
+  .covbar{height:9px; border-radius:5px; background:var(--grid); overflow:hidden; width:100%; margin-top:8px; display:flex}
+  .covbar i{height:100%; display:block}
+
+  /* heatmap */
+  .heat-scroll{overflow-x:auto; padding:6px 0 12px}
+  table.heat{border-collapse:separate; border-spacing:2px; font-size:11px}
+  table.heat th{font-weight:600; color:var(--muted); font-size:10.5px; padding:2px 4px; text-align:center; white-space:nowrap}
+  table.heat th.rowh{text-align:right; color:var(--ink-2); font-weight:600; font-size:11.5px; position:sticky; left:0;
+    background:var(--surface); padding-right:9px; min-width:118px}
+  table.heat td{width:30px; height:24px; border-radius:4px; text-align:center; color:#fff; font-weight:700;
+    font-variant-numeric:tabular-nums; cursor:default}
+  table.heat td.z{color:var(--muted); font-weight:500}
+
+  /* question browser */
+  .qfilters{display:grid; grid-template-columns:1fr 190px 190px 130px; gap:10px; margin:6px 0 4px}
+  .qfilters input,.qfilters select{font:inherit; font-size:13.5px; padding:10px 12px; border-radius:10px;
+    border:1px solid var(--border); background:var(--surface-2); color:var(--ink); width:100%}
+  .qfilters input:focus,.qfilters select:focus{outline:2px solid var(--sec-pre); outline-offset:-1px; border-color:transparent}
+  .qmeta{color:var(--muted); font-size:12.5px; padding:12px 2px 6px}
+  .qlist{display:flex; flex-direction:column; gap:10px; padding-bottom:8px}
+  .qcard{border:1px solid var(--border); border-radius:13px; background:var(--surface-2); padding:14px 16px}
+  .qcard .qtags{display:flex; gap:7px; flex-wrap:wrap; margin-bottom:9px; align-items:center}
+  .qtag{font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; color:#fff}
+  .qtag.year{background:var(--muted)}
+  .qtag.topic{background:none; color:var(--ink-2); border:1px solid var(--border)}
+  .qtag.ans{background:var(--good); margin-left:auto}
+  .qcard .qtext{font-size:14px; line-height:1.55; color:var(--ink)}
+  .qcard .qtext mark{background:color-mix(in srgb,var(--sec-yellow,#eda100) 40%,transparent); color:inherit; border-radius:3px; padding:0 2px}
+  .qcard .qtext b.opt{color:var(--ink-2); font-weight:700}
+  .btn{font:inherit; font-size:13.5px; font-weight:650; padding:9px 18px; border-radius:10px; cursor:pointer;
+    border:1px solid var(--border); background:var(--surface-2); color:var(--ink)}
+  .btn:hover{border-color:var(--sec-pre); color:var(--sec-pre)}
+  .qempty{text-align:center; color:var(--muted); padding:34px 0; font-size:14px}
+  @media (max-width:720px){ .qfilters{grid-template-columns:1fr 1fr} }
+
+  /* syllabus */
+  .syl-sec{margin:6px 0 14px}
+  .syl-sec h3{display:flex; align-items:center; gap:10px; font-size:14px; margin:16px 0 10px; letter-spacing:.01em}
+  .syl-sec h3 .dot{width:11px; height:11px; border-radius:3px}
+  .syl-sec h3 .cnt{color:var(--muted); font-weight:600; font-size:12.5px}
+  .sub{border:1px solid var(--border); border-radius:12px; margin-bottom:8px; background:var(--surface-2); overflow:hidden}
+  .sub summary{list-style:none; cursor:pointer; padding:13px 16px; display:flex; align-items:center; gap:12px}
+  .sub summary::-webkit-details-marker{display:none}
+  .sub .sname{font-weight:650; font-size:14px}
+  .sub .chip{font-size:11.5px; font-weight:700; font-variant-numeric:tabular-nums; padding:3px 9px; border-radius:999px;
+    color:#fff}
+  .sub .share{margin-left:auto; display:flex; align-items:center; gap:10px; color:var(--ink-2); font-size:12.5px}
+  .sub .minibar{width:78px; height:6px; border-radius:3px; background:var(--grid); overflow:hidden}
+  .sub .minibar i{display:block; height:100%; border-radius:3px}
+  .sub .caret{color:var(--muted); transition:transform .2s}
+  .sub[open] .caret{transform:rotate(90deg)}
+  .sub .body{padding:0 16px 15px 16px; color:var(--ink-2); font-size:13.5px}
+  .sub .body .topics{color:var(--ink); background:var(--surface); border:1px solid var(--border);
+    border-radius:9px; padding:11px 13px; margin-top:2px}
+
+  .foot{color:var(--muted); font-size:12.5px; margin-top:26px; line-height:1.7}
+  .foot b{color:var(--ink-2)}
+  .view{display:none} .view.on{display:block}
+  @media (max-width:720px){ .kpis{grid-template-columns:repeat(2,1fr)} nav.tabs{display:none} }
+</style>
+</head>
+<body>
+<header>
+  <div class="hrow">
+    <div class="brand"><span class="logo">◆</span><div>NEET-PG PYQ Analytics<small>2010–2025 papers · 2026 syllabus</small></div></div>
+    <div class="spacer"></div>
+    <nav class="tabs" id="tabs">
+      <button data-v="overview" class="on">Overview</button>
+      <button data-v="subjects">Subjects</button>
+      <button data-v="trends">Trends</button>
+      <button data-v="questions">Questions</button>
+      <button data-v="papers">Papers</button>
+      <button data-v="syllabus">2026 Syllabus</button>
+    </nav>
+    <button class="iconbtn" id="theme" title="Toggle theme">◐</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>Where NEET-PG questions actually come from</h1>
+    <p>Every extractable question from <b>15 exam years (2010–2025)</b> parsed and mapped to the 19 MBBS subjects, next to the official <b>2026 syllabus</b> and downloadable papers.</p>
+    <div class="est">Subject split is an <b style="margin:0 3px">estimate</b> from keyword classification — directional, not official</div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <!-- OVERVIEW -->
+  <div class="view on" data-view="overview">
+    <section class="panel">
+      <div class="phead">
+        <div>
+          <h2 id="wt-title">Subject weightage — all 15 papers</h2>
+          <p>Share of classified questions per subject. <b>Click any subject</b> to expand its year-by-year trend and stats.</p>
+        </div>
+        <div class="spacer"></div>
+        <div class="seg" id="wt-mode" style="margin-right:12px">
+          <button data-w="all" class="on">All years</button>
+          <button data-w="recent">Recent 3</button>
+        </div>
+        <div class="legend" id="legend-ov"></div>
+      </div>
+      <div class="coverage" id="coverage"></div>
+      <div class="bars" id="bars-ov"></div>
+    </section>
+
+    <div class="insights" id="insights"></div>
+
+    <section class="panel">
+      <div class="phead">
+        <div>
+          <h2 id="trend-title">Question mix over time — by section</h2>
+          <p id="trend-sub">Stacked question counts per exam year. The clinical block dominates modern papers.</p>
+        </div>
+        <div class="spacer"></div>
+        <div class="seg" id="trend-mode">
+          <button data-m="count" class="on">Counts</button>
+          <button data-m="pct">Share&nbsp;%</button>
+        </div>
+      </div>
+      <div class="chartbox">
+        <svg class="trend" id="svg-ov" viewBox="0 0 900 340" preserveAspectRatio="xMidYMid meet" role="img"></svg>
+        <div class="tt" id="tt-ov"></div>
+      </div>
+      <div class="legend" id="legend-tr" style="padding:2px 0 16px"></div>
+    </section>
+  </div>
+
+  <!-- SUBJECTS -->
+  <div class="view" data-view="subjects">
+    <section class="panel">
+      <div class="phead">
+        <div><h2>Full subject ranking</h2><p>All 19 subjects by estimated question volume across 2010–2025. <b>Click to expand</b> a subject's trend and stats.</p></div>
+        <div class="spacer"></div>
+        <div class="seg" id="wt-mode2" style="margin-right:12px">
+          <button data-w="all" class="on">All years</button>
+          <button data-w="recent">Recent 3</button>
+        </div>
+        <div class="legend" id="legend-sub"></div>
+      </div>
+      <div class="bars" id="bars-sub"></div>
+    </section>
+  </div>
+
+  <!-- TRENDS -->
+  <div class="view" data-view="trends">
+    <section class="panel">
+      <div class="phead">
+        <div><h2 id="trend2-title">Question mix over time</h2><p id="trend2-sub">How the paper's composition shifted year to year.</p></div>
+        <div class="spacer"></div>
+        <div class="seg" id="trend2-mode"><button data-m="count" class="on">Counts</button><button data-m="pct">Share&nbsp;%</button></div>
+      </div>
+      <div class="chartbox">
+        <svg class="trend" id="svg-tr" viewBox="0 0 900 360" preserveAspectRatio="xMidYMid meet" role="img"></svg>
+        <div class="tt" id="tt-tr"></div>
+      </div>
+      <div class="legend" id="legend-tr2" style="padding:2px 0 16px"></div>
+    </section>
+    <section class="panel">
+      <div class="phead"><div><h2>Subject × year heatmap</h2><p>Estimated question count for every subject in every paper. Darker = more questions. Rows sorted by total; the deepest columns show where a subject peaked.</p></div></div>
+      <div class="heat-scroll" id="heatmap"></div>
+    </section>
+    <section class="panel">
+      <div class="phead"><div><h2>Total questions parsed per paper</h2><p>Coverage available for analysis each year. 2015 was not released publicly; 2016 is a solved compilation; 2025 uses a ~200-question recall set.</p></div></div>
+      <div class="chartbox">
+        <svg class="trend" id="svg-vol" viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet" role="img"></svg>
+        <div class="tt" id="tt-vol"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div class="view" data-view="questions">
+    <section class="panel">
+      <div class="phead"><div><h2>Question browser</h2><p>Search the <b id="q-total"></b> parsed questions. Filter by subject, topic, or year, or type a keyword.</p></div></div>
+      <div class="qfilters">
+        <input type="search" id="q-search" placeholder="🔍  Search question text — e.g. &quot;diuretic&quot;, &quot;nerve&quot;, &quot;pre-eclampsia&quot;">
+        <select id="q-subject"></select>
+        <select id="q-topic"></select>
+        <select id="q-year"></select>
+      </div>
+      <div class="qmeta" id="q-meta"></div>
+      <div class="qlist" id="q-list"></div>
+      <div id="q-more" style="text-align:center; padding:8px 0 16px"></div>
+    </section>
+  </div>
+
+  <!-- PAPERS -->
+  <div class="view" data-view="papers">
+    <section class="panel">
+      <div class="phead"><div><h2>Papers library</h2><p>Open the actual question papers and solutions. Files live alongside this page.</p></div></div>
+      <div class="papers" id="papers"></div>
+    </section>
+  </div>
+
+  <!-- SYLLABUS -->
+  <div class="view" data-view="syllabus">
+    <section class="panel">
+      <div class="phead">
+        <div><h2>NEET-PG 2026 syllabus explorer</h2><p>All 19 MBBS subjects across the three curriculum blocks, each paired with its estimated PYQ weightage. Expand for high-yield topics.</p></div>
+        <div class="spacer"></div>
+        <a class="plink" href="NEET-PG-2026-Information-Bulletin-Syllabus.pdf" target="_blank"><span class="ic">📄</span>Official Bulletin PDF<span class="go">↗</span></a>
+      </div>
+      <div id="syllabus"></div>
+    </section>
+  </div>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script src="data.js"></script>
+<script>
+const D = window.NEET_DATA;
+const SECTIONS = D.sections;
+const SUBJECTS = D.subjects;
+const ALL_YEARS = D.meta.generated_years;               // every parsed paper
+const YEARS = D.meta.stats_years || D.meta.generated_years; // classifiable papers only
+const SEC_OF = {}; Object.entries(SECTIONS).forEach(([sec,subs])=>subs.forEach(s=>SEC_OF[s]=sec));
+const SEC_KEYS = Object.keys(SECTIONS);
+const SEC_VAR = {"Pre-Clinical":"--sec-pre","Para-Clinical":"--sec-para","Clinical":"--sec-clin"};
+const cssv = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const secColor = sec => cssv(SEC_VAR[sec]);
+
+// curated high-yield topics (authoritative full list = official bulletin)
+const TOPICS = {
+ "Anatomy":"Embryology (germ layers, pharyngeal arches, neural crest), gross anatomy of limbs & thorax, cranial nerves & foramina, histology of epithelia and glands.",
+ "Physiology":"Membrane & action potentials, cardiac cycle & output, renal clearance/GFR, acid–base and respiratory physiology, endocrine feedback loops.",
+ "Biochemistry":"Enzyme kinetics & inhibition, glycolysis/Krebs/HMP shunt, urea cycle, vitamin & cofactor deficiencies, molecular biology (DNA/RNA, mutations).",
+ "Pathology":"General pathology (necrosis, inflammation, neoplasia), haematology, tumour markers & staining, systemic organ pathology — consistently high-yield.",
+ "Pharmacology":"Mechanisms & receptors, autonomic drugs, antimicrobials, diuretics & cardiovascular drugs, pharmacokinetics, adverse effects & antidotes.",
+ "Microbiology":"Bacterial/viral/fungal/parasite identification, Gram stain & culture media, immunology basics, vaccines and the national immunization schedule.",
+ "Forensic Medicine":"Thanatology (rigor/livor mortis, PM changes), asphyxial deaths, common poisons, medico-legal reports, relevant sections of law.",
+ "PSM":"Epidemiology & study designs, sensitivity/specificity & screening, biostatistics, national health programmes, immunization & nutrition.",
+ "Medicine":"Cardiology, endocrinology (diabetes/thyroid), nephrology, neurology, infectious disease and autoimmune conditions — the largest clinical block.",
+ "Surgery":"Acute abdomen, hernia, hepatobiliary & GI surgery, trauma & burns, surgical oncology, pre/post-operative management.",
+ "Obstetrics & Gynaecology":"Antenatal care, labour & partograph, obstetric emergencies (pre-eclampsia, PPH), contraception, menstrual disorders, gynae-oncology.",
+ "Paediatrics":"Neonatology & APGAR, growth & development milestones, immunization, nutrition (kwashiorkor/marasmus), common congenital disorders.",
+ "Orthopaedics":"Fracture patterns & management, joint dislocations, avascular necrosis, bone tumours, spine, plaster & orthopaedic implants.",
+ "Radiology":"Modalities (X-ray/CT/MRI/USG), contrast studies, classic imaging signs, safety and appropriate first-line imaging.",
+ "Anaesthesia":"Neuromuscular blockers & muscle relaxants, airway management & intubation, inhalational agents/MAC, spinal anaesthesia, complications.",
+ "Psychiatry":"Mood & psychotic disorders, anxiety & OCD, DSM criteria, psychopharmacology (antidepressants/antipsychotics), suicide risk.",
+ "Dermatology":"Papulosquamous disorders (psoriasis, lichen planus), vesiculobullous (pemphigus), infections, leprosy, skin malignancies.",
+ "Ophthalmology":"Refractive errors, cataract & glaucoma, retina (diabetic/hypertensive), red eye & uveitis, optic nerve pathways.",
+ "ENT":"Otology (otitis media, hearing loss, vertigo), rhinology & sinusitis, laryngology, epistaxis and head-&-neck basics."
+};
+
+/* ---------- theme ---------- */
+const themeBtn = document.getElementById('theme');
+function applyTheme(t){ document.documentElement.setAttribute('data-theme',t); localStorage.setItem('neet-theme',t);
+  renderAll(); }
+themeBtn.onclick = ()=>{ const cur=document.documentElement.getAttribute('data-theme')
+    || (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  applyTheme(cur==='dark'?'light':'dark'); };
+(function(){ const s=localStorage.getItem('neet-theme'); if(s) document.documentElement.setAttribute('data-theme',s); })();
+
+/* ---------- tabs ---------- */
+document.getElementById('tabs').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x===b));
+  showView(b.dataset.v);
+});
+function showView(v){ document.querySelectorAll('.view').forEach(el=>el.classList.toggle('on',el.dataset.view===v));
+  window.scrollTo({top:0,behavior:'smooth'}); }
+
+/* ---------- derived data ---------- */
+const RECENT_YEARS = YEARS.slice(-3);           // 3 most recent classifiable papers
+const EARLIER_YEARS = YEARS.slice(0,-3);
+function totalsFor(years){ // sorted [{s,n,sec}] over the given years
+  const o={}; SUBJECTS.forEach(s=>o[s]=0);
+  years.forEach(y=>SUBJECTS.forEach(s=>o[s]+=D.years[y].counts[s]));
+  return SUBJECTS.map(s=>({s,n:o[s],sec:SEC_OF[s]})).sort((a,b)=>b.n-a.n);
+}
+const subjTotals = totalsFor(YEARS);            // all-years ranking
+const subjRecent = totalsFor(RECENT_YEARS);
+const classifiedTotal = subjTotals.reduce((a,b)=>a+b.n,0);
+const recentTotal = subjRecent.reduce((a,b)=>a+b.n,0);
+const rankOf = {}; subjTotals.forEach((d,i)=>rankOf[d.s]=i+1);
+function sectionCountsByYear(){ // {year:{sec:count}}
+  const o={}; YEARS.forEach(y=>{ o[y]={}; SEC_KEYS.forEach(s=>o[y][s]=0);
+    const c=D.years[y].counts; SUBJECTS.forEach(su=>{ o[y][SEC_OF[su]]+=c[su]; }); });
+  return o;
+}
+function subjectByYear(sub){ return YEARS.map(y=>({y, n:D.years[y].counts[sub]})); }
+function subjectStats(sub){
+  const arr=subjectByYear(sub);
+  const total=D.subject_totals[sub];
+  const nz=arr.filter(d=>d.n>0);
+  const peak=arr.reduce((a,b)=>b.n>a.n?b:a,arr[0]);
+  const avg=total/arr.length;
+  // recent-3 avg vs earlier avg -> direction
+  const recAvg=RECENT_YEARS.reduce((a,y)=>a+D.years[y].counts[sub],0)/RECENT_YEARS.length;
+  const earAvg=EARLIER_YEARS.reduce((a,y)=>a+D.years[y].counts[sub],0)/(EARLIER_YEARS.length||1);
+  return {arr,total,appears:nz.length,peak,avg,recAvg,earAvg,
+    share:100*total/classifiedTotal, rank:rankOf[sub]};
+}
+
+/* ---------- KPI ---------- */
+function renderKPI(){
+  const exam=new Date(D.meta.exam_date_2026+'T00:00:00');
+  const days=Math.max(0,Math.ceil((exam-new Date())/86400000));
+  const papers=ALL_YEARS.length;
+  const el=document.getElementById('kpis');
+  el.innerHTML=`
+    <div class="kpi"><div class="n">${D.meta.grand_total_questions.toLocaleString()}</div><div class="l">Questions parsed</div><div class="sub">${classifiedTotal.toLocaleString()} subject-classified</div></div>
+    <div class="kpi"><div class="n">${papers}</div><div class="l">Exam years covered</div><div class="sub">2010 – 2025</div></div>
+    <div class="kpi"><div class="n">19</div><div class="l">MBBS subjects</div><div class="sub">3 curriculum blocks</div></div>
+    <div class="kpi countdown"><div class="n">${days}</div><div class="l">Days to NEET-PG 2026</div><div class="sub">30 Aug 2026</div></div>`;
+}
+
+/* ---------- section legend ---------- */
+function legendHTML(){ return SEC_KEYS.map(s=>
+  `<span class="lg" data-sec="${s}"><span class="sw" style="background:${secColor(s)}"></span>${s}</span>`).join(''); }
+
+/* ---------- bar chart with inline expand ---------- */
+let selectedSubject=null;
+let weightMode='all';   // 'all' | 'recent'
+function currentBarData(){ return weightMode==='recent'?subjRecent:subjTotals; }
+function currentDenom(){ return weightMode==='recent'?recentTotal:classifiedTotal; }
+
+function sparklineSVG(sub){
+  const st=subjectStats(sub), arr=st.arr, col=secColor(SEC_OF[sub]);
+  const W=220,H=64,m={t:8,r:6,b:16,l:6}, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const max=Math.max(2,...arr.map(d=>d.n));
+  const xs=i=>m.l+(arr.length<2?iw/2:iw*i/(arr.length-1));
+  const ys=v=>m.t+ih-ih*v/max;
+  let line='',area='M'+xs(0)+' '+ys(0);
+  arr.forEach((d,i)=>{ line+=(i?'L':'M')+xs(i)+' '+ys(d.n)+' '; area+=' L'+xs(i)+' '+ys(d.n); });
+  area+=' L'+xs(arr.length-1)+' '+ys(0)+' Z';
+  const pk=arr.indexOf(st.peak);
+  const dots=arr.map((d,i)=>`<circle cx="${xs(i)}" cy="${ys(d.n)}" r="${i===pk?3.2:2}" fill="${i===pk?col:cssv('--surface')}" stroke="${col}" stroke-width="1.5"/>`).join('');
+  const labels=[0,arr.length-1].map(i=>`<text x="${xs(i)}" y="${H-4}" text-anchor="${i?'end':'start'}" font-size="9" fill="${cssv('--muted')}">'${arr[i].y.slice(2)}</text>`).join('');
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}"><path d="${area}" fill="${col}" opacity="0.12"/>`+
+    `<path d="${line}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round"/>${dots}${labels}</svg>`;
+}
+function detailHTML(sub){
+  const st=subjectStats(sub);
+  const dir = st.recAvg>st.earAvg*1.15?'up':(st.recAvg<st.earAvg*0.85?'down':'flat');
+  const dirTxt = dir==='up'?'↑ Rising':dir==='down'?'↓ Cooling':'→ Steady';
+  const denomPct = weightMode==='recent'
+      ? (100*subjRecent.find(d=>d.s===sub).n/recentTotal).toFixed(1)
+      : st.share.toFixed(1);
+  return `<div class="bar-detail">
+    <div>${sparklineSVG(sub)}</div>
+    <div class="stat-grid">
+      <div class="stat"><span class="v">${st.total}</span><span class="k">Total questions</span></div>
+      <div class="stat"><span class="v">${denomPct}%</span><span class="k">Share of paper</span></div>
+      <div class="stat"><span class="v">#${st.rank}</span><span class="k">Rank of 19</span></div>
+      <div class="stat"><span class="v">${st.avg.toFixed(1)}</span><span class="k">Avg / paper</span></div>
+      <div class="stat"><span class="v">${st.peak.n} <small style="font-size:12px;color:var(--muted);font-weight:600">'${st.peak.y.slice(2)}</small></span><span class="k">Peak year</span></div>
+      <div class="stat"><span class="v ${dir==='up'?'up':dir==='down'?'down':''}">${dirTxt}</span><span class="k">Recent 3 vs earlier</span></div>
+    </div>
+    ${topicBreakdownHTML(sub)}</div>`;
+}
+function topicBreakdownHTML(sub){
+  const tt=D.topic_totals[sub]||{}; const col=secColor(SEC_OF[sub]);
+  const rows=Object.entries(tt).sort((a,b)=>b[1]-a[1]);
+  if(!rows.length) return '';
+  const max=rows[0][1];
+  const bars=rows.map(([t,n])=>`<div class="trow"><span class="tn" title="${t}">${t}</span>
+    <span class="tt2"><span class="tbar"><i style="width:${100*n/max}%;background:${col}"></i></span><span class="tv">${n}</span></span></div>`).join('');
+  return `<div class="bd-topics"><div class="th">Topic breakdown
+      <a href="#" class="browseTopic" data-sub="${sub}">Browse ${sub} questions →</a></div>
+    <div class="tgrid">${bars}</div></div>`;
+}
+function renderBars(elId){
+  const el=document.getElementById(elId); if(!el) return;
+  const list=currentBarData(), denom=currentDenom();
+  const max=Math.max(1,...list.map(d=>d.n));
+  el.innerHTML=list.map(d=>{
+    const pct=denom?(100*d.n/denom).toFixed(1):'0.0';
+    const w=(100*d.n/max).toFixed(1);
+    const sel=d.s===selectedSubject;
+    return `<div class="bar ${sel?'sel':''}" data-sub="${d.s}">
+      <div class="name" title="${d.s}"><span class="caretb">▸</span>${d.s}</div>
+      <div class="track"><div class="fill" style="width:${w}%;background:${secColor(d.sec)}"></div></div>
+      <div class="val">${d.n}<small>${pct}%</small></div></div>`+
+      (sel?detailHTML(d.s):'');
+  }).join('');
+  el.querySelectorAll('.bar').forEach(b=>b.onclick=()=>selectSubject(b.dataset.sub));
+}
+function selectSubject(sub){
+  selectedSubject = (selectedSubject===sub)?null:sub;
+  renderBars('bars-ov'); renderBars('bars-sub');
+  renderTrend('svg-ov','tt-ov','legend-tr', trendModeOv, 'trend-title','trend-sub');
+}
+function setWeightMode(m){
+  weightMode=m;
+  document.querySelectorAll('#wt-mode button,#wt-mode2 button').forEach(x=>x.classList.toggle('on',x.dataset.w===m));
+  document.getElementById('wt-title').textContent = m==='recent'
+    ? 'Subject weightage — recent 3 papers' : 'Subject weightage — all 15 papers';
+  renderBars('bars-ov'); renderBars('bars-sub'); renderCoverage();
+}
+
+/* ---------- SVG trend (stacked areas for sections, or a line for one subject) ---------- */
+let trendModeOv='count', trendModeTr='count';
+function renderTrend(svgId, ttId, legId, mode, titleId, subId){
+  const svg=document.getElementById(svgId); if(!svg) return;
+  const VB=svg.viewBox.baseVal, W=VB.width, H=VB.height;
+  const m={t:16,r:16,b:34,l:44}, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const xs=i=> m.l + (YEARS.length===1?iw/2:iw*i/(YEARS.length-1));
+  const NS='http://www.w3.org/2000/svg';
+  let out='';
+  const gridN=4;
+
+  if(selectedSubject){
+    // single subject line
+    if(titleId){document.getElementById(titleId).textContent=`${selectedSubject} — questions per year`;
+      document.getElementById(subId).innerHTML=`Estimated count of ${selectedSubject} questions each exam year. <a href="#" id="clearsel">Clear selection ↩</a>`;}
+    const data=subjectByYear(selectedSubject);
+    const max=Math.max(4,...data.map(d=>d.n));
+    const ys=v=> m.t+ih-(ih*v/max);
+    for(let g=0;g<=gridN;g++){ const v=Math.round(max*g/gridN); const y=ys(v);
+      out+=`<line x1="${m.l}" y1="${y}" x2="${W-m.r}" y2="${y}" stroke="${cssv('--grid')}" stroke-width="1"/>`;
+      out+=`<text x="${m.l-8}" y="${y+4}" text-anchor="end" font-size="11" fill="${cssv('--muted')}">${v}</text>`; }
+    const col=secColor(SEC_OF[selectedSubject]);
+    let dLine='', dArea='';
+    data.forEach((d,i)=>{ const x=xs(i),y=ys(d.n); dLine+=(i?'L':'M')+x+' '+y+' '; });
+    dArea=`M${xs(0)} ${ys(0)} `+data.map((d,i)=>'L'+xs(i)+' '+ys(d.n)).join(' ')+` L${xs(data.length-1)} ${ys(0)} Z`;
+    out+=`<path d="${dArea}" fill="${col}" opacity="0.13"/>`;
+    out+=`<path d="${dLine}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+    data.forEach((d,i)=>{ out+=`<circle cx="${xs(i)}" cy="${ys(d.n)}" r="4" fill="${cssv('--surface')}" stroke="${col}" stroke-width="2.5" data-i="${i}" class="pt"/>`; });
+    xlabels(); svg.innerHTML=out;
+    document.getElementById(legId).innerHTML='';
+    hoverSubject(svg,ttId,data,max,xs,ys,col);
+    const cs=document.getElementById('clearsel'); if(cs) cs.onclick=(e)=>{e.preventDefault(); selectSubject(selectedSubject);};
+    return;
+  }
+
+  // stacked section areas
+  if(titleId){document.getElementById(titleId).textContent='Question mix over time — by section';
+    document.getElementById(subId).textContent = mode==='pct'
+      ? 'Share of each curriculum block per exam year (normalised to 100%).'
+      : 'Stacked question counts per exam year across the three curriculum blocks.';}
+  const byY=sectionCountsByYear();
+  const totals=YEARS.map(y=>SEC_KEYS.reduce((a,s)=>a+byY[y][s],0));
+  const yearMax = mode==='pct'?100:Math.max(...totals);
+  const ys=v=> m.t+ih-(ih*v/yearMax);
+  for(let g=0;g<=gridN;g++){ const v=Math.round(yearMax*g/gridN); const y=ys(v);
+    out+=`<line x1="${m.l}" y1="${y}" x2="${W-m.r}" y2="${y}" stroke="${cssv('--grid')}" stroke-width="1"/>`;
+    out+=`<text x="${m.l-8}" y="${y+4}" text-anchor="end" font-size="11" fill="${cssv('--muted')}">${v}${mode==='pct'?'':''}</text>`; }
+  // build cumulative stacks
+  const val=(y,s)=> mode==='pct' ? (totals[YEARS.indexOf(y)]? 100*byY[y][s]/totals[YEARS.indexOf(y)]:0) : byY[y][s];
+  let lower=YEARS.map(()=>0);
+  SEC_KEYS.forEach(s=>{
+    const col=secColor(s);
+    const upper=YEARS.map((y,i)=>lower[i]+val(y,s));
+    let d='M';
+    YEARS.forEach((y,i)=> d+=`${xs(i)} ${ys(upper[i])} `+(i<YEARS.length-1?'L':''));
+    for(let i=YEARS.length-1;i>=0;i--) d+=`L${xs(i)} ${ys(lower[i])} `;
+    d+='Z';
+    out+=`<path d="${d}" fill="${col}" opacity="0.9" stroke="${cssv('--surface')}" stroke-width="1"/>`;
+    lower=upper;
+  });
+  xlabels(); svg.innerHTML=out;
+  document.getElementById(legId).innerHTML=legendHTML();
+  hoverStack(svg,ttId,byY,totals,mode,xs,m,ih);
+
+  function xlabels(){ YEARS.forEach((y,i)=>{ const show = YEARS.length<=10 || i%2===0 || i===YEARS.length-1;
+    if(show) out+=`<text x="${xs(i)}" y="${H-12}" text-anchor="middle" font-size="10.5" fill="${cssv('--muted')}">'${y.slice(2)}</text>`; }); }
+}
+
+function hoverStack(svg,ttId,byY,totals,mode,xs,m,ih){
+  const tt=document.getElementById(ttId);
+  const box=svg.parentElement;
+  svg.onmousemove=ev=>{
+    const r=svg.getBoundingClientRect(), sx=(ev.clientX-r.left)/r.width*svg.viewBox.baseVal.width;
+    let i=Math.round((sx-m.l)/((svg.viewBox.baseVal.width-m.l-16)/(YEARS.length-1)));
+    i=Math.max(0,Math.min(YEARS.length-1,i)); const y=YEARS[i];
+    tt.innerHTML=`<h4>NEET-PG ${y}${y==='2025'?' · recall set':''}</h4>`+
+      SEC_KEYS.map(s=>{ const v=byY[y][s]; const pc=totals[i]?(100*v/totals[i]).toFixed(0):0;
+        return `<div class="r"><span class="sw" style="background:${secColor(s)}"></span><span class="k">${s}</span><span class="v">${mode==='pct'?pc+'%':v}</span></div>`;}).join('')+
+      `<div class="r" style="border-top:1px solid var(--border);margin-top:5px;padding-top:5px"><span class="k">Total classified</span><span class="v">${totals[i]}</span></div>`;
+    place(tt,box,ev);
+  };
+  svg.onmouseleave=()=>tt.style.opacity=0;
+}
+function hoverSubject(svg,ttId,data,max,xs,ys,col){
+  const tt=document.getElementById(ttId), box=svg.parentElement;
+  svg.onmousemove=ev=>{ const r=svg.getBoundingClientRect(), sx=(ev.clientX-r.left)/r.width*svg.viewBox.baseVal.width;
+    let i=Math.round((sx-44)/((svg.viewBox.baseVal.width-60)/(YEARS.length-1)));
+    i=Math.max(0,Math.min(YEARS.length-1,i)); const d=data[i];
+    tt.innerHTML=`<h4>${selectedSubject} · ${d.y}</h4><div class="r"><span class="sw" style="background:${col}"></span><span class="k">Questions</span><span class="v">${d.n}</span></div>`;
+    place(tt,box,ev); };
+  svg.onmouseleave=()=>tt.style.opacity=0;
+}
+function place(tt,box,ev){ const b=box.getBoundingClientRect();
+  let x=ev.clientX-b.left+14, y=ev.clientY-b.top+12;
+  if(x+180>b.width) x=ev.clientX-b.left-180; tt.style.left=x+'px'; tt.style.top=y+'px'; tt.style.opacity=1; }
+
+/* ---------- volume bars (per-year parsed) ---------- */
+function renderVolume(){
+  const svg=document.getElementById('svg-vol'); if(!svg) return;
+  const VB=svg.viewBox.baseVal,W=VB.width,H=VB.height,m={t:16,r:16,b:34,l:44},iw=W-m.l-m.r,ih=H-m.t-m.b;
+  const data=ALL_YEARS.map(y=>({y,n:D.years[y].total_questions}));
+  const max=Math.max(...data.map(d=>d.n));
+  const bw=iw/data.length*0.6, gap=iw/data.length;
+  let out='';
+  for(let g=0;g<=4;g++){const v=Math.round(max*g/4),yy=m.t+ih-ih*g/4;
+    out+=`<line x1="${m.l}" y1="${yy}" x2="${W-m.r}" y2="${yy}" stroke="${cssv('--grid')}"/>`;
+    out+=`<text x="${m.l-8}" y="${yy+4}" text-anchor="end" font-size="11" fill="${cssv('--muted')}">${v}</text>`;}
+  data.forEach((d,i)=>{ const x=m.l+gap*i+(gap-bw)/2, h=ih*d.n/max, y=m.t+ih-h;
+    const excl=D.years[d.y].stats_excluded;
+    const fill=excl?cssv('--axis'):secColor('Pre-Clinical');
+    out+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="4" fill="${fill}" data-i="${i}" class="vb"/>`;
+    out+=`<text x="${x+bw/2}" y="${H-12}" text-anchor="middle" font-size="10.5" fill="${cssv('--muted')}">'${d.y.slice(2)}</text>`;
+    out+=`<text x="${x+bw/2}" y="${y-5}" text-anchor="middle" font-size="10" fill="${cssv('--ink-2')}" font-weight="700">${d.n}</text>`;});
+  svg.innerHTML=out;
+  const tt=document.getElementById('tt-vol'),box=svg.parentElement;
+  svg.querySelectorAll('.vb').forEach(rc=>{ rc.onmousemove=ev=>{const d=data[rc.dataset.i]; const yd=D.years[d.y];
+    tt.innerHTML=`<h4>NEET-PG ${d.y}</h4><div class="r"><span class="k">Questions parsed</span><span class="v">${d.n}</span></div>`+
+      (yd.stats_excluded
+        ? `<div class="r"><span class="k">Solved compilation —</span></div><div class="r"><span class="k">excluded from subject stats</span></div>`
+        : `<div class="r"><span class="k">Classified</span><span class="v">${yd.classified}</span></div>`);
+    place(tt,box,ev);}; rc.onmouseleave=()=>tt.style.opacity=0;});
+}
+
+/* ---------- papers ---------- */
+function renderPapers(){
+  const el=document.getElementById('papers');
+  el.innerHTML=ALL_YEARS.slice().reverse().map(y=>{
+    const f=D.years[y].files; const yd=D.years[y];
+    const link=(arr,label,ic)=> arr.length
+      ? arr.map(fn=>`<a class="plink" href="${encodeURI(fn)}" target="_blank"><span class="ic">${ic}</span>${label}${arr.length>1?' · '+shiftLabel(fn):''}<span class="go">↗</span></a>`).join('')
+      : `<span class="plink mut"><span class="ic">${ic}</span>${label} — n/a</span>`;
+    const sol = f.sol.length?f.sol:(f.key.length?f.key:[]);
+    const solLabel = f.sol.length?'Solutions':(f.key.length?'Answer key':'Solutions');
+    const meta = yd.stats_excluded
+      ? `<b>${yd.total_questions}</b> questions · solved compilation`
+      : yd.recall_source
+        ? `<b>${yd.total_questions}</b> recall Qs · <b>${yd.classified}</b> classified`
+        : `<b>${yd.total_questions}</b> parsed · <b>${yd.classified}</b> classified`;
+    const recallLink = (f.recall&&f.recall.length)
+      ? link(f.recall,'Recall questions (200)','🧠') : '';
+    return `<div class="pcard">
+      <div><div class="yr">${y}</div><div class="qn">${meta}</div></div>
+      <div class="links">
+        ${recallLink}
+        ${link(f.qp,'Question paper','📝')}
+        ${sol.length?link(sol,solLabel,'✅'):`<span class="plink mut"><span class="ic">✅</span>Solutions — n/a</span>`}
+      </div></div>`;
+  }).join('');
+}
+function shiftLabel(fn){ const m=fn.match(/Shift-(\d)/i); return m?'Shift '+m[1]:''; }
+
+/* ---------- syllabus ---------- */
+function renderSyllabus(){
+  const el=document.getElementById('syllabus');
+  const maxN=Math.max(...SUBJECTS.map(s=>D.subject_totals[s]));
+  el.innerHTML=SEC_KEYS.map(sec=>{
+    const subs=SECTIONS[sec]; const col=secColor(sec);
+    const secTotal=subs.reduce((a,s)=>a+D.subject_totals[s],0);
+    const rows=subs.slice().sort((a,b)=>D.subject_totals[b]-D.subject_totals[a]).map(s=>{
+      const n=D.subject_totals[s], pct=(100*n/classifiedTotal).toFixed(1), w=(100*n/maxN).toFixed(0);
+      return `<details class="sub">
+        <summary>
+          <span class="chip" style="background:${col}">${n}</span>
+          <span class="sname">${s}</span>
+          <span class="share"><span class="minibar"><i style="width:${w}%;background:${col}"></i></span>${pct}%</span>
+          <span class="caret">▸</span>
+        </summary>
+        <div class="body"><div class="topics">${TOPICS[s]||''}</div></div>
+      </details>`;
+    }).join('');
+    return `<div class="syl-sec">
+      <h3><span class="dot" style="background:${col}"></span>${sec}<span class="cnt">· ${subs.length} subjects · ~${(100*secTotal/classifiedTotal).toFixed(0)}% of PYQs</span></h3>
+      ${rows}</div>`;
+  }).join('');
+}
+
+/* ---------- coverage callout ---------- */
+function renderCoverage(){
+  const el=document.getElementById('coverage'); if(!el) return;
+  const list=currentBarData(), denom=currentDenom();
+  let cum=0, n=0; const target=denom*0.6;
+  for(const d of list){ cum+=d.n; n++; if(cum>=target) break; }
+  const scope = weightMode==='recent'?'recent 3 papers':'all 15 papers';
+  const segs = list.slice(0,n).map(d=>`<i style="width:${100*d.n/denom}%;background:${secColor(d.sec)}"></i>`).join('')
+             + `<i style="flex:1;background:var(--grid)"></i>`;
+  el.innerHTML=`<div class="big">${n}</div>
+    <div class="ctext">Just the <b>top ${n} subjects</b> account for <b>~60%</b> of all classified questions across the ${scope}.
+      Master these first — the remaining ${list.length-n} subjects split the other 40%.
+      <div class="covbar">${segs}</div></div>`;
+}
+
+/* ---------- movers (rising / cooling) ---------- */
+function renderInsights(){
+  const el=document.getElementById('insights'); if(!el) return;
+  // percentage-point change in share: recent-3 share vs earlier share
+  const movers=SUBJECTS.map(s=>{
+    const rec=RECENT_YEARS.reduce((a,y)=>a+D.years[y].counts[s],0);
+    const ear=EARLIER_YEARS.reduce((a,y)=>a+D.years[y].counts[s],0);
+    const recShare=recentTotal?100*rec/recentTotal:0;
+    const earTot=EARLIER_YEARS.reduce((a,y)=>a+SUBJECTS.reduce((x,su)=>x+D.years[y].counts[su],0),0);
+    const earShare=earTot?100*ear/earTot:0;
+    return {s, sec:SEC_OF[s], delta:recShare-earShare, recShare, earShare};
+  });
+  const rising=movers.slice().sort((a,b)=>b.delta-a.delta).slice(0,4);
+  const cooling=movers.slice().sort((a,b)=>a.delta-b.delta).slice(0,4);
+  const row=m=>{ const up=m.delta>=0;
+    return `<div class="mover"><span class="sw" style="width:10px;height:10px;border-radius:3px;background:${secColor(m.sec)}"></span>
+      <span class="mname">${m.s}</span>
+      <span class="from">${m.earShare.toFixed(1)}% → ${m.recShare.toFixed(1)}%</span>
+      <span class="arrow ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(m.delta).toFixed(1)}pt</span></div>`; };
+  el.innerHTML=`
+    <div class="icard"><h3>📈 Gaining weight</h3><p class="hint">Biggest rise in share — recent 3 papers vs earlier years.</p>${rising.map(row).join('')}</div>
+    <div class="icard"><h3>📉 Losing weight</h3><p class="hint">Biggest drop in share over the same window.</p>${cooling.map(row).join('')}</div>`;
+}
+
+/* ---------- subject × year heatmap ---------- */
+function renderHeatmap(){
+  const el=document.getElementById('heatmap'); if(!el) return;
+  const rows=subjTotals; // sorted by total
+  let gmax=1; YEARS.forEach(y=>SUBJECTS.forEach(s=>gmax=Math.max(gmax,D.years[y].counts[s])));
+  const ramp=['#cde2fb','#9ec5f4','#6da7ec','#3987e5','#256abf','#184f95','#0d366b'];
+  const cell=v=>{ if(!v) return {bg:'transparent',cls:'z'};
+    const t=v/gmax; const i=Math.min(ramp.length-1,Math.round(t*(ramp.length-1)));
+    return {bg:ramp[i],cls: i<2?'z':''}; };
+  let html='<table class="heat"><thead><tr><th class="rowh"></th>'+
+    YEARS.map(y=>`<th>'${y.slice(2)}</th>`).join('')+'</tr></thead><tbody>';
+  rows.forEach(r=>{
+    html+=`<tr><th class="rowh" title="${r.s}">${r.s}</th>`;
+    YEARS.forEach(y=>{ const v=D.years[y].counts[r.s]; const c=cell(v);
+      html+=`<td class="${c.cls}" style="background:${c.bg}" title="${r.s} · ${y}: ${v} questions">${v||''}</td>`; });
+    html+='</tr>';
+  });
+  el.innerHTML=html+'</tbody></table>';
+}
+
+/* ---------- question browser ---------- */
+const Q_PAGE=50; let qShown=Q_PAGE, qReady=false;
+function qYears(){ return [...new Set(D.questions.map(q=>q.y))].sort(); }
+function escapeHtml(s){ return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function initQuestions(){
+  const subj=document.getElementById('q-subject');
+  subj.innerHTML='<option value="">All subjects</option>'+
+    SUBJECTS.map(s=>`<option>${s}</option>`).join('')+'<option value="Unclassified">Unclassified</option>';
+  document.getElementById('q-year').innerHTML='<option value="">All years</option>'+
+    qYears().map(y=>`<option>${y}</option>`).join('');
+  document.getElementById('q-total').textContent=D.questions.length.toLocaleString();
+  updateTopicOptions();
+  document.getElementById('q-search').addEventListener('input',()=>{qShown=Q_PAGE;renderQuestions();});
+  document.getElementById('q-subject').addEventListener('change',()=>{updateTopicOptions();qShown=Q_PAGE;renderQuestions();});
+  document.getElementById('q-topic').addEventListener('change',()=>{qShown=Q_PAGE;renderQuestions();});
+  document.getElementById('q-year').addEventListener('change',()=>{qShown=Q_PAGE;renderQuestions();});
+  qReady=true; renderQuestions();
+}
+function updateTopicOptions(){
+  const sub=document.getElementById('q-subject').value, tsel=document.getElementById('q-topic');
+  if(sub && D.topic_totals[sub] && Object.keys(D.topic_totals[sub]).length){
+    const topics=Object.entries(D.topic_totals[sub]).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
+    tsel.innerHTML='<option value="">All topics</option>'+topics.map(t=>`<option>${t}</option>`).join('');
+    tsel.disabled=false;
+  } else { tsel.innerHTML='<option value="">All topics</option>'; tsel.disabled=true; }
+}
+function filteredQuestions(){
+  const sub=document.getElementById('q-subject').value, top=document.getElementById('q-topic').value,
+        yr=document.getElementById('q-year').value, q=document.getElementById('q-search').value.trim().toLowerCase();
+  return D.questions.filter(r=>(!sub||r.s===sub)&&(!top||r.t===top)&&(!yr||r.y===yr)&&(!q||r.q.toLowerCase().includes(q)));
+}
+function fmtQ(text,term){
+  let html=escapeHtml(text).replace(/\((A|B|C|D|1|2|3|4)\)/g,'<b class="opt">($1)</b>');
+  if(term){ const re=new RegExp('('+term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig'); html=html.replace(re,'<mark>$1</mark>'); }
+  return html;
+}
+function renderQuestions(){
+  if(!qReady) return;
+  const list=filteredQuestions(), term=document.getElementById('q-search').value.trim();
+  document.getElementById('q-meta').textContent = list.length
+    ? `Showing ${Math.min(qShown,list.length).toLocaleString()} of ${list.length.toLocaleString()} matching questions` : '';
+  const el=document.getElementById('q-list');
+  if(!list.length){ el.innerHTML='<div class="qempty">No questions match these filters. Try clearing the search or widening the subject.</div>';
+    document.getElementById('q-more').innerHTML=''; return; }
+  el.innerHTML=list.slice(0,qShown).map(r=>{
+    const col=r.s==='Unclassified'?cssv('--muted'):secColor(SEC_OF[r.s]);
+    const topicTag=r.t?`<span class="qtag topic">${r.t}</span>`:'';
+    const ansTag=r.a?`<span class="qtag ans">Ans: ${r.a}</span>`:'';
+    return `<div class="qcard"><div class="qtags"><span class="qtag year">${r.y}</span>
+      <span class="qtag" style="background:${col}">${r.s}</span>${topicTag}${ansTag}</div>
+      <div class="qtext">${fmtQ(r.q,term)}</div></div>`;
+  }).join('');
+  document.getElementById('q-more').innerHTML = list.length>qShown
+    ? `<button class="btn" id="q-loadmore">Show more (${(list.length-qShown).toLocaleString()} left)</button>` : '';
+  const lm=document.getElementById('q-loadmore'); if(lm) lm.onclick=()=>{qShown+=Q_PAGE;renderQuestions();};
+}
+// jump from a subject's expand panel into the browser
+document.addEventListener('click',e=>{ const a=e.target.closest('.browseTopic'); if(!a) return;
+  e.preventDefault();
+  document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x.dataset.v==='questions'));
+  showView('questions');
+  document.getElementById('q-search').value=''; document.getElementById('q-year').value='';
+  document.getElementById('q-subject').value=a.dataset.sub; updateTopicOptions();
+  qShown=Q_PAGE; renderQuestions();
+});
+
+/* ---------- footer ---------- */
+function renderFoot(){
+  const statsParsed = YEARS.reduce((a,y)=>a+D.years[y].total_questions,0);
+  document.getElementById('foot').innerHTML=
+   `<b>Method.</b> Text extracted from every question-paper PDF (2010–2025); questions split on their numbering and each classified into one of the 19 subjects by a weighted medical-keyword matcher. `+
+   `${D.meta.grand_total_questions.toLocaleString()} questions parsed in total; across the ${YEARS.length} clean papers, ${classifiedTotal.toLocaleString()} of ${statsParsed.toLocaleString()} (${Math.round(100*classifiedTotal/statsParsed)}%) were confidently classified — ambiguous ones are left uncounted. `+
+   `Subject percentages are <b>directional estimates</b>, not an official blueprint — NBEMS does not publish a subject-wise count. `+
+   `<b>2015</b> was never released publicly; <b>2016</b> is a solved compilation (kept in the library but excluded from subject stats); <b>2025</b> uses a ~200-question student recall set (DigiNerve), the exam being memory-based. `+
+   `Regenerate anytime with <b>build_analysis.py</b>. Official syllabus: the NEET-PG 2026 Information Bulletin.`;
+}
+
+/* ---------- mode toggles ---------- */
+document.getElementById('trend-mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  trendModeOv=b.dataset.m; document.querySelectorAll('#trend-mode button').forEach(x=>x.classList.toggle('on',x===b));
+  renderTrend('svg-ov','tt-ov','legend-tr',trendModeOv,'trend-title','trend-sub');});
+document.getElementById('trend2-mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  trendModeTr=b.dataset.m; document.querySelectorAll('#trend2-mode button').forEach(x=>x.classList.toggle('on',x===b));
+  renderTrend('svg-tr','tt-tr','legend-tr2',trendModeTr,'trend2-title','trend2-sub');});
+['wt-mode','wt-mode2'].forEach(id=>document.getElementById(id).addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return; setWeightMode(b.dataset.w);}));
+
+/* ---------- render all ---------- */
+function renderAll(){
+  renderKPI();
+  document.getElementById('legend-ov').innerHTML=legendHTML();
+  document.getElementById('legend-sub').innerHTML=legendHTML();
+  renderBars('bars-ov'); renderBars('bars-sub'); renderCoverage(); renderInsights();
+  renderTrend('svg-ov','tt-ov','legend-tr',trendModeOv,'trend-title','trend-sub');
+  renderTrend('svg-tr','tt-tr','legend-tr2',trendModeTr,'trend2-title','trend2-sub');
+  renderVolume(); renderHeatmap(); renderPapers(); renderSyllabus(); renderFoot();
+  renderQuestions();
+}
+renderAll();
+initQuestions();
+addEventListener('resize',()=>{ renderTrend('svg-ov','tt-ov','legend-tr',trendModeOv,'trend-title','trend-sub');
+  renderTrend('svg-tr','tt-tr','legend-tr2',trendModeTr,'trend2-title','trend2-sub'); renderVolume(); });
+</script>
+</body>
+</html>

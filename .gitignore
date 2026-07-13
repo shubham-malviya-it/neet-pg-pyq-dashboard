@@ -1,0 +1,16 @@
+# Vercel
+.vercel
+.env*
+
+# Node
+node_modules/
+
+# Tooling / scratch caches (not part of the project)
+.firecrawl/
+.playwright-mcp/
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db

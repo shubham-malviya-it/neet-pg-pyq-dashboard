@@ -1,0 +1,5 @@
+# Build tooling and source-data files not needed by the deployed site
+build_analysis.py
+NEET-PG-2026-Syllabus-Collegedunia.md
+.firecrawl
+.playwright-mcp
