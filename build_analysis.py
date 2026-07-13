@@ -348,6 +348,53 @@ def inventory():
 # subject-classified, so they are excluded from the subject/trend aggregates.
 STATS_EXCLUDE = {"2016"}
 
+# ---- 2026 predicted high-yield topics (external forecast PDF) -----------------
+PRED_PDF = "NEET-PG-2026-Predicted-Topics.pdf"
+PRED_SOURCE = "Dr Ganga's Master Medicine — 180 high-yield topic forecast for NEET-PG 2026"
+# Map the forecast's subject names onto our 19 canonical subjects.
+PRED_SUBJECT_MAP = {
+    "Forensic Medicine & Toxicology": "Forensic Medicine",
+    "PSM (Community Medicine)": "PSM",
+}
+
+def parse_predictions():
+    """Extract the 180-topic forecast into structured data. Returns None if the
+    source PDF is absent (keeps the build working without it)."""
+    path = os.path.join(BASE, PRED_PDF)
+    if not os.path.exists(path):
+        return None
+    reader = PdfReader(path)
+    full = " ".join((p.extract_text() or "") for p in reader.pages)
+    full = re.sub(r"DR GANGA.S MASTER MEDICINE\s*-?\s*180 TOPICS PREDICTION IN NEET PG", "", full)
+    full = re.sub(r"\s+", " ", full).strip()
+    hdr = re.compile(
+        r"(?:(?:High|Moderate|Low)\s+)?([A-Za-z][A-Za-z &\(\)]+?)\s+—\s+(\d+)\s+topics"
+        r"\s+Combined past-question count across these topics:\s+(\d+)×")
+    heads = [{"ns": m.start(1), "cs": m.end(), "name": m.group(1).strip(),
+              "ntop": int(m.group(2)), "comb": int(m.group(3))}
+             for m in hdr.finditer(full)]
+    rowre = re.compile(r"(.+?)\s+(\d+)×\s+(High|Moderate|Low)\b")
+    subjects, pri = {}, {"High": 0, "Moderate": 0, "Low": 0}
+    total = 0
+    for i, h in enumerate(heads):
+        seg_end = heads[i + 1]["ns"] if i + 1 < len(heads) else len(full)
+        seg = re.sub(r"Topic Times repeated Priority", "", full[h["cs"]:seg_end])
+        topics = []
+        for m in rowre.finditer(seg):
+            name = re.sub(r"^(?:High|Moderate|Low)\s+", "", m.group(1).strip(" .,"))
+            topics.append({"topic": name, "times": int(m.group(2)), "priority": m.group(3)})
+            pri[m.group(3)] += 1
+        canon = PRED_SUBJECT_MAP.get(h["name"], h["name"])
+        subjects[canon] = {"declared": h["ntop"], "combined": h["comb"], "topics": topics}
+        total += len(topics)
+    return {
+        "source": PRED_SOURCE,
+        "total_topics": total,
+        "total_repeats": sum(t["times"] for s in subjects.values() for t in s["topics"]),
+        "priority_counts": pri,
+        "subjects": subjects,
+    }
+
 # Year -> local markdown/text file to use as the question source in place of the
 # PDF (used when a fuller student-recall set is available).
 SUPPLEMENT = {"2025": "NEET-PG-2025-Recall-Questions.md"}
@@ -428,6 +475,7 @@ def main():
         "topic_totals": topic_totals,
         "years": years_data,
         "questions": questions,
+        "predictions": parse_predictions(),
     }
     out = os.path.join(BASE, "data.js")
     with open(out, "w", encoding="utf-8") as fh:

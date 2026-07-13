@@ -20945,5 +20945,1031 @@ window.NEET_DATA = {
    "q": "A known case of anal carcinoma with a mass near the anal opening comes for a follow-up. Which of the following lymph nodes are most likely involved? 1. Superficial inguinal lymph nodes 2. Deep inguinal lymph nodes 3. External iliac lymph nodes 4. Internal iliac lymph nodes Answer: A ---",
    "a": "A"
   }
- ]
+ ],
+ "predictions": {
+  "source": "Dr Ganga's Master Medicine — 180 high-yield topic forecast for NEET-PG 2026",
+  "total_topics": 180,
+  "total_repeats": 605,
+  "priority_counts": {
+   "High": 131,
+   "Moderate": 43,
+   "Low": 6
+  },
+  "subjects": {
+   "Anatomy": {
+    "declared": 7,
+    "combined": 19,
+    "topics": [
+     {
+      "topic": "NERVES",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Oocyte , Fertilization, Cortical reaction",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Umbilicus",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Abductor Pollicis Brevis",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Aortic Arches",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Cerebellum",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Muscles of Mastication",
+      "times": 2,
+      "priority": "Moderate"
+     }
+    ]
+   },
+   "Physiology": {
+    "declared": 8,
+    "combined": 16,
+    "topics": [
+     {
+      "topic": "Action Potential Curve",
+      "times": 2,
+      "priority": "High"
+     },
+     {
+      "topic": "GLUT Transporters",
+      "times": 2,
+      "priority": "High"
+     },
+     {
+      "topic": "JVP waves",
+      "times": 2,
+      "priority": "High"
+     },
+     {
+      "topic": "Pacinian Corpuscle",
+      "times": 2,
+      "priority": "High"
+     },
+     {
+      "topic": "Post-gastrectomy / ileal & jejunal resection",
+      "times": 2,
+      "priority": "High"
+     },
+     {
+      "topic": "Respiratory Distress Syndrome",
+      "times": 2,
+      "priority": "High"
+     },
+     {
+      "topic": "Resting Membrane Potential",
+      "times": 2,
+      "priority": "High"
+     },
+     {
+      "topic": "Sensory fibres",
+      "times": 2,
+      "priority": "High"
+     }
+    ]
+   },
+   "Biochemistry": {
+    "declared": 9,
+    "combined": 39,
+    "topics": [
+     {
+      "topic": "Vitamins",
+      "times": 15,
+      "priority": "High"
+     },
+     {
+      "topic": "Lysosomal storage disorder",
+      "times": 6,
+      "priority": "High"
+     },
+     {
+      "topic": "Glycogen storage disorders",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Alkaptonuria",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Familial hypercholesterolaemia",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Homocystinuria",
+      "times": 2,
+      "priority": "High"
+     },
+     {
+      "topic": "Metabolic cycles – insulin:glucagon ratio",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Inhibition",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Minerals",
+      "times": 2,
+      "priority": "Moderate"
+     }
+    ]
+   },
+   "Pathology": {
+    "declared": 14,
+    "combined": 61,
+    "topics": [
+     {
+      "topic": "Genetics and syndrome",
+      "times": 8,
+      "priority": "High"
+     },
+     {
+      "topic": "Leukaemia",
+      "times": 8,
+      "priority": "High"
+     },
+     {
+      "topic": "Intestinal disorders",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Lymphoma",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Carcinoma lung and thymoma",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Disorders of Haemoglobin",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Glomerular diseases",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Thyroid",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Tumors",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Coagulation disorders",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Inflammation",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Iron deficiency anaemia",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Macrocytic anaemia",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Multiple Myeloma and Amyloid",
+      "times": 3,
+      "priority": "High"
+     }
+    ]
+   },
+   "Pharmacology": {
+    "declared": 12,
+    "combined": 56,
+    "topics": [
+     {
+      "topic": "Antihypertensives",
+      "times": 7,
+      "priority": "High"
+     },
+     {
+      "topic": "Antimuscarinic",
+      "times": 7,
+      "priority": "High"
+     },
+     {
+      "topic": "Antiarrhythmic",
+      "times": 6,
+      "priority": "High"
+     },
+     {
+      "topic": "Anti TB",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Anticoagulants and Fibrinolytics",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Antiemetics",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "NSAIDs",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Pharmacokinetics and Pharmacodynamics",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Antifungal",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Antimalarials",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Antimicrobials",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Antiparkinsons",
+      "times": 3,
+      "priority": "High"
+     }
+    ]
+   },
+   "Microbiology": {
+    "declared": 9,
+    "combined": 30,
+    "topics": [
+     {
+      "topic": "Nematodes",
+      "times": 6,
+      "priority": "High"
+     },
+     {
+      "topic": "Neisseria gonorrhoeae",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Candidiasis",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Leptospirosis",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Neisseria meningitidis",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Vibrio",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Hemoflagellates",
+      "times": 3,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Malaria",
+      "times": 3,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Bacterial structure",
+      "times": 2,
+      "priority": "Moderate"
+     }
+    ]
+   },
+   "Forensic Medicine": {
+    "declared": 8,
+    "combined": 29,
+    "topics": [
+     {
+      "topic": "Postmortem",
+      "times": 7,
+      "priority": "High"
+     },
+     {
+      "topic": "Age estimation, identification",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Arsenic",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Asphyxial Death",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Barberio test",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Datura poisoning",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Autopsy techniques",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "BNS SECTIONS",
+      "times": 2,
+      "priority": "Moderate"
+     }
+    ]
+   },
+   "Medicine": {
+    "declared": 15,
+    "combined": 60,
+    "topics": [
+     {
+      "topic": "ECG, arrhythmias & heart blocks",
+      "times": 9,
+      "priority": "High"
+     },
+     {
+      "topic": "ABG and RTA",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Diabetes – DKA and HHS",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Pituitary disorders – DI and SIADH",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "HIV",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Valvular heart disease",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Vasculitis",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Cirrhosis and its complications (SBP, Child–Pugh, variceal bleed)",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Coronary artery disease",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Disorders of Aorta",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Electrolyte disorders",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Heart failure",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "JVP",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Malabsorption disorders",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Pleural disease",
+      "times": 3,
+      "priority": "High"
+     }
+    ]
+   },
+   "Surgery": {
+    "declared": 16,
+    "combined": 56,
+    "topics": [
+     {
+      "topic": "Breast Cancer",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Inguinal hernia / hernia",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Bladder Carcinoma",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Oral Cavity Cancer",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Penile Carcinoma",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Triage / trauma",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Aortic Dissection",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Cystourethroscope",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Fistula in Ano",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Glasgow Coma Scale",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Hollow Viscus Perforation",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Hydatid cyst",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Oesophageal Varices",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Peripheral arterial disease / Leriche’s syndrome / aorto-iliac disease",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Rectal Carcinoma",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Subarachnoid haemorrhage",
+      "times": 3,
+      "priority": "High"
+     }
+    ]
+   },
+   "Obstetrics & Gynaecology": {
+    "declared": 17,
+    "combined": 66,
+    "topics": [
+     {
+      "topic": "Endometriosis / endometrioma",
+      "times": 6,
+      "priority": "High"
+     },
+     {
+      "topic": "Fibroids",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Hysteroscopy",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Mullerian anomalies",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Breech & vertex presentation / persistent occipito-posterior",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "High-risk pregnancy / mother on anticoagulant",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Normal labour / partograph",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Postpartum haemorrhage",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Pre eclampsia",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Prolapse",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Amniotic fluid embolism / oligohydramnios / polyhydramnios",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "C-SECTION indications",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Cervical Carcinoma",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Ectopic pregnancy",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Gestational Age assessment",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Gestational / pregestational diabetes mellitus",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "HELLP syndrome",
+      "times": 3,
+      "priority": "High"
+     }
+    ]
+   },
+   "Paediatrics": {
+    "declared": 8,
+    "combined": 27,
+    "topics": [
+     {
+      "topic": "Intestinal disorders",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Malnutrition",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Measles",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Congenital infections",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Growth charts and curves",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Nephrotic syndrome",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Bladder exstrophy",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Diphtheria",
+      "times": 2,
+      "priority": "Moderate"
+     }
+    ]
+   },
+   "Orthopaedics": {
+    "declared": 7,
+    "combined": 19,
+    "topics": [
+     {
+      "topic": "Knee",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Giant cell tumour (osteoclastoma)",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Supracondylar fracture of humerus",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Ankle",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Fat Embolism",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Hip",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Osteoporosis",
+      "times": 2,
+      "priority": "Moderate"
+     }
+    ]
+   },
+   "PSM": {
+    "declared": 11,
+    "combined": 39,
+    "topics": [
+     {
+      "topic": "Biomedical waste management",
+      "times": 6,
+      "priority": "High"
+     },
+     {
+      "topic": "Parametric test",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Vitamin deficiency",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Case-control / cohort study",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Disaster management / disaster cycle",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Kata thermometer",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Vaccines / CI for live vaccine / immunisation schedule",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Varicella",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "ASHA",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Coefficient of regression / variation",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Demography / demographic cycle",
+      "times": 2,
+      "priority": "Moderate"
+     }
+    ]
+   },
+   "Psychiatry": {
+    "declared": 6,
+    "combined": 15,
+    "topics": [
+     {
+      "topic": "Alcohol/Wernicke's",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Postpartum Blues",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Cocaine",
+      "times": 2,
+      "priority": "High"
+     },
+     {
+      "topic": "Depression",
+      "times": 2,
+      "priority": "High"
+     },
+     {
+      "topic": "Panic disorder",
+      "times": 2,
+      "priority": "High"
+     },
+     {
+      "topic": "ADHD",
+      "times": 2,
+      "priority": "Low"
+     }
+    ]
+   },
+   "Dermatology": {
+    "declared": 7,
+    "combined": 13,
+    "topics": [
+     {
+      "topic": "Acne Vulgaris",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Kerion, Favus",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Leprosy",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Pemphigus Vulgaris",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Psoriasis",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Syphilis",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Acanthosis Nigricans",
+      "times": 1,
+      "priority": "Low"
+     }
+    ]
+   },
+   "Ophthalmology": {
+    "declared": 7,
+    "combined": 20,
+    "topics": [
+     {
+      "topic": "Visual Pathway Defects",
+      "times": 6,
+      "priority": "High"
+     },
+     {
+      "topic": "Glaucoma - Drugs",
+      "times": 5,
+      "priority": "High"
+     },
+     {
+      "topic": "Astigmatism",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Diabetic Retinopathy",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Retinoblastoma",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Uvea -Acute Anterior Uveitis",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Acanthamoeba Keratitis",
+      "times": 1,
+      "priority": "Low"
+     }
+    ]
+   },
+   "ENT": {
+    "declared": 7,
+    "combined": 15,
+    "topics": [
+     {
+      "topic": "Inner Ear",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Atrophic Rhinitis",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Ear-Nerve Supply",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Nasopharyngeal Angiofibroma",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Otitis Media",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Rinne's Test",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Tonsil",
+      "times": 2,
+      "priority": "Moderate"
+     }
+    ]
+   },
+   "Radiology": {
+    "declared": 7,
+    "combined": 13,
+    "topics": [
+     {
+      "topic": "Radiation therapy",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Barium Studies",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Craniopharyngioma",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Subarachnoid haemorrhage",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "TAPVC",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "ARDS",
+      "times": 1,
+      "priority": "Low"
+     },
+     {
+      "topic": "Bowel Obstruction",
+      "times": 1,
+      "priority": "Low"
+     }
+    ]
+   },
+   "Anaesthesia": {
+    "declared": 5,
+    "combined": 12,
+    "topics": [
+     {
+      "topic": "ACLS",
+      "times": 4,
+      "priority": "High"
+     },
+     {
+      "topic": "Capnography",
+      "times": 3,
+      "priority": "High"
+     },
+     {
+      "topic": "Malignant Hyperthermia",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "Muscle Relaxants",
+      "times": 2,
+      "priority": "Moderate"
+     },
+     {
+      "topic": "EMLA patch (methaemoglobinaemia)",
+      "times": 1,
+      "priority": "Low"
+     }
+    ]
+   }
+  }
+ }
 };
