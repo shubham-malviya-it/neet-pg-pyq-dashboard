@@ -1,0 +1,399 @@
+{
+ "cases": [
+  {
+   "id": "anatomy-1",
+   "subject": "Anatomy",
+   "text": "Which cranial nerve passes through this foramen and innervates the muscle?"
+  },
+  {
+   "id": "physiology-1",
+   "subject": "Physiology",
+   "text": "What happens to cardiac output according to the Frank-Starling mechanism?"
+  },
+  {
+   "id": "biochemistry-1",
+   "subject": "Biochemistry",
+   "text": "Which coenzyme is required by this enzyme in the urea cycle?"
+  },
+  {
+   "id": "pathology-1",
+   "subject": "Pathology",
+   "text": "Biopsy of a malignant tumour shows granuloma and caseous necrosis."
+  },
+  {
+   "id": "pharmacology-1",
+   "subject": "Pharmacology",
+   "text": "What is the mechanism of action and adverse effect of furosemide?"
+  },
+  {
+   "id": "microbiology-1",
+   "subject": "Microbiology",
+   "text": "A gram-positive bacterium grows on this culture medium. Identify the pathogen."
+  },
+  {
+   "id": "forensic-1",
+   "subject": "Forensic Medicine",
+   "text": "At postmortem, rigor mortis helps estimate the cause and time of death."
+  },
+  {
+   "id": "psm-1",
+   "subject": "PSM",
+   "text": "A cohort study measures incidence and is affected by selection bias."
+  },
+  {
+   "id": "medicine-1",
+   "subject": "Medicine",
+   "text": "A patient with diabetes, hypertension and renal failure presents with chronic symptoms."
+  },
+  {
+   "id": "surgery-1",
+   "subject": "Surgery",
+   "text": "After laparoscopic cholecystectomy, which post-operative surgical complication is likely?"
+  },
+  {
+   "id": "obgyn-1",
+   "subject": "Obstetrics & Gynaecology",
+   "text": "A pregnant woman at 36 weeks gestation develops pre-eclampsia during labour."
+  },
+  {
+   "id": "paediatrics-1",
+   "subject": "Paediatrics",
+   "text": "A newborn infant has a low APGAR score and delayed developmental milestones."
+  },
+  {
+   "id": "orthopaedics-1",
+   "subject": "Orthopaedics",
+   "text": "A femur fracture with joint dislocation is treated with a plaster cast."
+  },
+  {
+   "id": "radiology-1",
+   "subject": "Radiology",
+   "text": "The radiograph and CT scan show an opacity; which contrast imaging study follows?"
+  },
+  {
+   "id": "anaesthesia-1",
+   "subject": "Anaesthesia",
+   "text": "During anaesthesia, intubation follows pre-oxygenation and laryngoscopy."
+  },
+  {
+   "id": "psychiatry-1",
+   "subject": "Psychiatry",
+   "text": "A patient with schizophrenia reports hallucinations and a fixed delusion."
+  },
+  {
+   "id": "dermatology-1",
+   "subject": "Dermatology",
+   "text": "A dermatology patient has psoriasis with a pruritic skin lesion."
+  },
+  {
+   "id": "ophthalmology-1",
+   "subject": "Ophthalmology",
+   "text": "Fundus examination shows a retinal lesion with optic disc changes and glaucoma."
+  },
+  {
+   "id": "ent-1",
+   "subject": "ENT",
+   "text": "Otitis with tympanic membrane damage causes hearing loss and tinnitus."
+  },
+  {
+   "id": "weak-1",
+   "subject": null,
+   "text": "Which of the following statements is correct?"
+  }
+ ],
+ "report": {
+  "fixture_kind": "manually labelled smoke benchmark",
+  "limitations": "Synthetic representative stems; not an estimate of production precision or recall.",
+  "cases": 20,
+  "correct": 20,
+  "accuracy": 1.0,
+  "macro_precision": 1.0,
+  "macro_recall": 1.0,
+  "per_class": {
+   "Anatomy": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Physiology": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Biochemistry": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Pathology": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Pharmacology": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Microbiology": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Forensic Medicine": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "PSM": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Medicine": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Surgery": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Obstetrics & Gynaecology": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Paediatrics": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Orthopaedics": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Radiology": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Anaesthesia": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Psychiatry": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Dermatology": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Ophthalmology": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "ENT": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   },
+   "Unclassified": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "support": 1
+   }
+  },
+  "confusion": {
+   "Anatomy": {
+    "Anatomy": 1
+   },
+   "Physiology": {
+    "Physiology": 1
+   },
+   "Biochemistry": {
+    "Biochemistry": 1
+   },
+   "Pathology": {
+    "Pathology": 1
+   },
+   "Pharmacology": {
+    "Pharmacology": 1
+   },
+   "Microbiology": {
+    "Microbiology": 1
+   },
+   "Forensic Medicine": {
+    "Forensic Medicine": 1
+   },
+   "PSM": {
+    "PSM": 1
+   },
+   "Medicine": {
+    "Medicine": 1
+   },
+   "Surgery": {
+    "Surgery": 1
+   },
+   "Obstetrics & Gynaecology": {
+    "Obstetrics & Gynaecology": 1
+   },
+   "Paediatrics": {
+    "Paediatrics": 1
+   },
+   "Orthopaedics": {
+    "Orthopaedics": 1
+   },
+   "Radiology": {
+    "Radiology": 1
+   },
+   "Anaesthesia": {
+    "Anaesthesia": 1
+   },
+   "Psychiatry": {
+    "Psychiatry": 1
+   },
+   "Dermatology": {
+    "Dermatology": 1
+   },
+   "Ophthalmology": {
+    "Ophthalmology": 1
+   },
+   "ENT": {
+    "ENT": 1
+   },
+   "Unclassified": {
+    "Unclassified": 1
+   }
+  },
+  "predictions": [
+   {
+    "id": "anatomy-1",
+    "actual": "Anatomy",
+    "predicted": "Anatomy",
+    "correct": true
+   },
+   {
+    "id": "physiology-1",
+    "actual": "Physiology",
+    "predicted": "Physiology",
+    "correct": true
+   },
+   {
+    "id": "biochemistry-1",
+    "actual": "Biochemistry",
+    "predicted": "Biochemistry",
+    "correct": true
+   },
+   {
+    "id": "pathology-1",
+    "actual": "Pathology",
+    "predicted": "Pathology",
+    "correct": true
+   },
+   {
+    "id": "pharmacology-1",
+    "actual": "Pharmacology",
+    "predicted": "Pharmacology",
+    "correct": true
+   },
+   {
+    "id": "microbiology-1",
+    "actual": "Microbiology",
+    "predicted": "Microbiology",
+    "correct": true
+   },
+   {
+    "id": "forensic-1",
+    "actual": "Forensic Medicine",
+    "predicted": "Forensic Medicine",
+    "correct": true
+   },
+   {
+    "id": "psm-1",
+    "actual": "PSM",
+    "predicted": "PSM",
+    "correct": true
+   },
+   {
+    "id": "medicine-1",
+    "actual": "Medicine",
+    "predicted": "Medicine",
+    "correct": true
+   },
+   {
+    "id": "surgery-1",
+    "actual": "Surgery",
+    "predicted": "Surgery",
+    "correct": true
+   },
+   {
+    "id": "obgyn-1",
+    "actual": "Obstetrics & Gynaecology",
+    "predicted": "Obstetrics & Gynaecology",
+    "correct": true
+   },
+   {
+    "id": "paediatrics-1",
+    "actual": "Paediatrics",
+    "predicted": "Paediatrics",
+    "correct": true
+   },
+   {
+    "id": "orthopaedics-1",
+    "actual": "Orthopaedics",
+    "predicted": "Orthopaedics",
+    "correct": true
+   },
+   {
+    "id": "radiology-1",
+    "actual": "Radiology",
+    "predicted": "Radiology",
+    "correct": true
+   },
+   {
+    "id": "anaesthesia-1",
+    "actual": "Anaesthesia",
+    "predicted": "Anaesthesia",
+    "correct": true
+   },
+   {
+    "id": "psychiatry-1",
+    "actual": "Psychiatry",
+    "predicted": "Psychiatry",
+    "correct": true
+   },
+   {
+    "id": "dermatology-1",
+    "actual": "Dermatology",
+    "predicted": "Dermatology",
+    "correct": true
+   },
+   {
+    "id": "ophthalmology-1",
+    "actual": "Ophthalmology",
+    "predicted": "Ophthalmology",
+    "correct": true
+   },
+   {
+    "id": "ent-1",
+    "actual": "ENT",
+    "predicted": "ENT",
+    "correct": true
+   },
+   {
+    "id": "weak-1",
+    "actual": "Unclassified",
+    "predicted": "Unclassified",
+    "correct": true
+   }
+  ]
+ }
+}

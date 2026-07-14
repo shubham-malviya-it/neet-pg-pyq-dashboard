@@ -1,5 +1,10 @@
 # Build tooling and source-data files not needed by the deployed site
 build_analysis.py
 NEET-PG-2026-Syllabus-Collegedunia.md
+classifier_benchmark.json
+README.md
+RIGHTS_AND_SOURCES.md
+requirements.txt
+tests
 .firecrawl
 .playwright-mcp

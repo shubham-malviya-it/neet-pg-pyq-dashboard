@@ -8,8 +8,20 @@ node_modules/
 # Tooling / scratch caches (not part of the project)
 .firecrawl/
 .playwright-mcp/
+.remember/
 __pycache__/
 *.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+tests/
+
+# Local Python environments and generated build output
+.venv/
+venv/
+build/
+dist/
 
 # OS
 .DS_Store

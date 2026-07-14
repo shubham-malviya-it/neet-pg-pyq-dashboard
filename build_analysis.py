@@ -2,13 +2,21 @@
 """
 NEET-PG PYQ analysis pipeline.
 Extracts questions from each question-paper PDF, classifies each into one of the
-19 NEET-PG subjects via a weighted medical-keyword classifier, and writes data.js
-consumed by index.html. Classification is heuristic (labelled "estimated").
+19 NEET-PG subjects via a weighted medical-keyword classifier, and writes the
+aggregate data.js plus per-question questions.json. Classification is heuristic
+and every decision retains its scores and provenance for auditability.
 """
 import os, re, json, glob, sys
+from bisect import bisect_right
+from urllib.parse import quote
+import fitz
 from PyPDF2 import PdfReader
 
 BASE = os.path.dirname(os.path.abspath(__file__))
+IMAGE_ASSET_ROOT = os.path.join(BASE, "assets", "question-images")
+IMAGE_ASSET_URL_ROOT = "assets/question-images"
+IMAGE_RENDER_SCALE = 1.5
+IMAGE_JPEG_QUALITY = 68
 
 # ---- 19 NEET-PG subjects grouped into the 3 syllabus sections ----------------
 SECTIONS = {
@@ -136,7 +144,7 @@ def _clean_sequence(pairs):
     return out
 
 def extract_questions(text):
-    """Return list of question text blocks.
+    """Return question block dictionaries with number and character offsets.
     Patterns are tried in priority order; the first that yields a solid count
     (>=30) wins, so a clean paper isn't overridden by a noisier fallback
     pattern. If none is solid, take the longest available."""
@@ -159,7 +167,7 @@ def extract_questions(text):
         # the options, which pollute keyword matching. Classify only the stem +
         # the four options: cut just after the last option marker if we find one.
         block = _trim_to_options(block)
-        blocks.append(block)
+        blocks.append({"number": num, "text": block, "start": pos, "end": end})
     return blocks
 
 OPT_MARK = re.compile(r"\(\s*[Dd4]\s*\)")   # option (D) or (4)
@@ -175,7 +183,18 @@ def _trim_to_options(block):
         return block[:cut]
     return block[:600]   # no clear options -> cap length
 
+CLASSIFIER_THRESHOLD = 1
+CLASSIFIER_MAX_CANDIDATES = 5
+SUBJECT_ORDER = {subject: index for index, subject in enumerate(SUBJECTS)}
+
 def classify(qtext):
+    """Return a transparent classification decision.
+
+    Any non-zero keyword score receives a subject label. Exact top-score ties
+    are resolved by canonical SUBJECTS order while remaining explicitly marked
+    as ties with their candidate subjects and raw scores retained for audit.
+    Only questions with no keyword match remain Unclassified.
+    """
     scores = {}
     for s, pats in COMPILED.items():
         sc = 0
@@ -184,9 +203,31 @@ def classify(qtext):
                 sc += w
         if sc:
             scores[s] = sc
-    if not scores:
-        return None
-    return max(scores, key=scores.get)
+    ranked = sorted(
+        scores.items(), key=lambda item: (-item[1], SUBJECT_ORDER[item[0]])
+    )
+    top_score = ranked[0][1] if ranked else 0
+    second_score = ranked[1][1] if len(ranked) > 1 else 0
+    tied = bool(ranked and len(ranked) > 1 and top_score == second_score)
+    meets_threshold = top_score >= CLASSIFIER_THRESHOLD
+    accepted = meets_threshold
+    # Confidence describes separation from the runner-up and is deliberately
+    # zero for tied or rejected decisions. It is not a calibrated probability.
+    confidence = (top_score - second_score) / top_score if accepted else 0.0
+    return {
+        "subject": ranked[0][0] if accepted else None,
+        "top_score": top_score,
+        "confidence": round(confidence, 3),
+        "margin": top_score - second_score,
+        "tie": tied,
+        "threshold": CLASSIFIER_THRESHOLD,
+        "meets_threshold": meets_threshold,
+        "scores": {subject: score for subject, score in ranked},
+        "candidates": [
+            {"subject": subject, "score": score}
+            for subject, score in ranked[:CLASSIFIER_MAX_CANDIDATES]
+        ],
+    }
 
 # ---- topic (sub-subject) keywords: subject -> [(topic, pattern), ...] --------
 TOPIC_KW = {
@@ -306,19 +347,192 @@ def clean_q(block):
     t = re.sub(r"^Q\.\s+", "", t)          # redundant "Q." prefix in some recall stems
     t = re.sub(r"\s*\n\s*", " ", t)
     t = re.sub(r"\bPage\s*\d+\s*of\s*\d+\b", "", t, flags=re.I)
+    # Some compilation PDFs inject a document header and exam instructions
+    # immediately after an image-only stem. They are not part of the question.
+    t = re.split(r"\bNEET\s*PG\s*\d{4}\s+Question\s+Paper\s+Detailed\b",
+                 t, maxsplit=1, flags=re.I)[0]
     t = re.sub(r"\s{2,}", " ", t).strip()
     return t[:600]
 
+OPTION_PATTERN = re.compile(r"(?:\(\s*[A-D1-4]\s*\)|^\s*[A-D1-4][\.)]\s+)", re.I | re.M)
+IMAGE_CUES = [
+    ("explicit image reference", re.compile(r"\b(?:image|photograph|picture|figure|illustration)\b", re.I)),
+    ("visual shown", re.compile(r"\b(?:shown|depicted|demonstrated)\s+(?:above|below|here|in the)\b", re.I)),
+    ("diagnostic visual", re.compile(r"\b(?:radiograph|x[ -]?ray|CT scan|MRI|ultrasound|USG|ECG|fundus|histolog(?:y|ical)|slide)\b", re.I)),
+    ("visual identification", re.compile(r"\bidentify\s+(?:the|this|following)\b", re.I)),
+]
+
+def extraction_quality(qtext):
+    """Describe whether the extracted block is usable without hiding defects."""
+    cleaned = clean_q(qtext)
+    chars = len(cleaned)
+    options = len(OPTION_PATTERN.findall(qtext))
+    flags = []
+    if chars < 40:
+        flags.append("very_short")
+    elif chars < 90:
+        flags.append("short")
+    if options == 0:
+        flags.append("no_option_markers")
+    elif options < 4:
+        flags.append("partial_options")
+    if chars >= 590:
+        flags.append("truncated_for_display")
+    score = 1.0
+    score -= 0.45 if chars < 40 else (0.2 if chars < 90 else 0)
+    score -= 0.35 if options == 0 else (0.15 if options < 4 else 0)
+    score -= 0.1 if chars >= 590 else 0
+    score = round(max(0.0, score), 2)
+    quality = "high" if score >= 0.8 else ("medium" if score >= 0.5 else "low")
+    return {
+        "quality": quality,
+        "score": score,
+        "character_count": chars,
+        "option_marker_count": options,
+        "flags": flags,
+    }
+
+def image_dependency(qtext):
+    cues = [label for label, pattern in IMAGE_CUES if pattern.search(qtext)]
+    return {"dependent": bool(cues), "cues": cues}
+
 def read_pdf_text(path, max_pages=None):
+    """Return joined text, total pages, and offsets for each extracted page."""
     r = PdfReader(path)
     pages = r.pages if max_pages is None else r.pages[:max_pages]
-    out = []
-    for p in pages:
+    out, offsets = [], []
+    cursor = 0
+    for page_number, p in enumerate(pages, 1):
         try:
-            out.append(p.extract_text() or "")
+            page_text = p.extract_text() or ""
         except Exception:
-            out.append("")
-    return "\n".join(out), len(r.pages)
+            page_text = ""
+        offsets.append({"page": page_number, "start": cursor,
+                        "character_count": len(page_text)})
+        out.append(page_text)
+        cursor += len(page_text) + 1  # joining newline
+    return "\n".join(out), len(r.pages), offsets
+
+def page_for_offset(offsets, position):
+    if not offsets:
+        return None
+    starts = [entry["start"] for entry in offsets]
+    return offsets[max(0, bisect_right(starts, position) - 1)]["page"]
+
+def _asset_slug(value):
+    """Return a deterministic, URL-safe filename component."""
+    value = os.path.splitext(os.path.basename(value))[0].lower()
+    return re.sub(r"[^a-z0-9]+", "-", value).strip("-")
+
+def _match_words(page, question_text):
+    """Locate a question stem in a PyMuPDF page's positioned word list.
+
+    PyPDF2 and PyMuPDF do not always split punctuation identically, so matching
+    is performed on lowercase alphanumeric tokens. Starting at any of the first
+    five stem tokens avoids weak anchors such as a leading "A" or "Which".
+    """
+    words = page.get_text("words", sort=True)
+    page_tokens = []
+    for word_index, word in enumerate(words):
+        token = re.sub(r"[^a-z0-9]+", "", word[4].lower())
+        if token:
+            page_tokens.append((token, word_index))
+    target = [re.sub(r"[^a-z0-9]+", "", token.lower())
+              for token in clean_q(question_text).split()]
+    target = [token for token in target if token]
+    best_count, best_word_index = 0, None
+    for target_start in range(min(5, len(target))):
+        for page_start, (token, word_index) in enumerate(page_tokens):
+            if token != target[target_start]:
+                continue
+            count = 0
+            limit = min(20, len(target) - target_start,
+                        len(page_tokens) - page_start)
+            for offset in range(limit):
+                if page_tokens[page_start + offset][0] != target[target_start + offset]:
+                    break
+                count += 1
+            if count > best_count:
+                best_count, best_word_index = count, word_index
+    if best_word_index is None:
+        return None, 0
+    matched = [fitz.Rect(word[:4]) for word in words[best_word_index:]
+               if re.sub(r"[^a-z0-9]+", "", word[4].lower())]
+    # Use only the opening words for geometry. The full matching run often
+    # reaches the options and would make unrelated footer images appear near.
+    matched = matched[:min(best_count, 8)]
+    anchor = fitz.Rect(matched[0])
+    for rect in matched[1:]:
+        anchor.include_rect(rect)
+    return anchor, best_count
+
+def question_crop(page, question_text, next_question_text=None):
+    """Choose a useful page region around the located question and its image."""
+    bounds = page.rect
+    anchor, match_words = _match_words(page, question_text)
+    if anchor is None or match_words < 3:
+        # A deterministic middle-page fallback is preferable to silently
+        # omitting an asset when a source PDF has unusual text encoding.
+        centre = bounds.y0 + bounds.height * 0.5
+        anchor = fitz.Rect(bounds.x0, centre, bounds.x1, centre + 1)
+        locator = "page-region-fallback"
+    else:
+        locator = "question-text-anchor"
+
+    y0 = max(bounds.y0, anchor.y0 - 95)
+    y1 = min(bounds.y1, anchor.y1 + 365)
+
+    # Stop before the following question when it occurs farther down the same
+    # page. This avoids turning a useful inline crop into a near-full page.
+    next_limit = None
+    if next_question_text:
+        next_anchor, next_match_words = _match_words(page, next_question_text)
+        if next_anchor is not None and next_match_words >= 3 and next_anchor.y0 > anchor.y1 + 60:
+            next_limit = next_anchor.y0 - 8
+            y1 = min(y1, next_limit)
+
+    # Include a nearby embedded figure in full. Ignore near-full-page image
+    # layers, which are usually scanned page backgrounds rather than figures.
+    page_area = max(1, bounds.width * bounds.height)
+    for info in page.get_image_info():
+        image_rect = fitz.Rect(info.get("bbox", (0, 0, 0, 0))) & bounds
+        if image_rect.is_empty or image_rect.get_area() > page_area * 0.72:
+            continue
+        if image_rect.y1 >= anchor.y0 - 220 and image_rect.y0 <= anchor.y1 + 400:
+            y0 = max(bounds.y0, min(y0, image_rect.y0 - 8))
+            y1 = min(bounds.y1, max(y1, image_rect.y1 + 8))
+    if next_limit is not None:
+        y1 = min(y1, next_limit)
+
+    # Keep horizontal page context: older papers are single-column, while a
+    # few newer layouts contain labels or image annotations outside text boxes.
+    crop = fitz.Rect(bounds.x0 + 12, y0, bounds.x1 - 12, y1) & bounds
+    return crop, {"locator": locator, "matched_words": match_words}
+
+def extract_question_image(document, source_filename, year, page_number, qnum,
+                           question_text, next_question_text=None):
+    """Render an optimized local JPEG crop and return its web path + metadata."""
+    if not page_number or page_number > document.page_count:
+        raise ValueError("source page is unavailable")
+    page = document[page_number - 1]
+    crop, crop_meta = question_crop(page, question_text, next_question_text)
+    rel_dir = os.path.join(str(year), _asset_slug(source_filename))
+    filename = f"p{page_number:04d}-q{qnum:03d}.jpg"
+    disk_dir = os.path.join(IMAGE_ASSET_ROOT, rel_dir)
+    os.makedirs(disk_dir, exist_ok=True)
+    disk_path = os.path.join(disk_dir, filename)
+    pixmap = page.get_pixmap(matrix=fitz.Matrix(IMAGE_RENDER_SCALE, IMAGE_RENDER_SCALE),
+                             clip=crop, colorspace=fitz.csRGB, alpha=False)
+    pixmap.save(disk_path, jpg_quality=IMAGE_JPEG_QUALITY)
+    web_path = "/".join((IMAGE_ASSET_URL_ROOT, rel_dir.replace(os.sep, "/"), filename))
+    metadata = {
+        "width": pixmap.width,
+        "height": pixmap.height,
+        "bytes": os.path.getsize(disk_path),
+        "crop": [round(value, 1) for value in (crop.x0, crop.y0, crop.x1, crop.y1)],
+        **crop_meta,
+    }
+    return web_path, disk_path, metadata
 
 # ---- paper inventory (year -> files) -----------------------------------------
 def inventory():
@@ -399,6 +613,71 @@ def parse_predictions():
 # PDF (used when a fuller student-recall set is available).
 SUPPLEMENT = {"2025": "NEET-PG-2025-Recall-Questions.md"}
 
+# A deliberately small, manually labelled smoke benchmark. These examples test
+# classifier behaviour; they are not claimed to estimate real-world accuracy.
+BENCHMARK_CASES = [
+    {"id": "anatomy-1", "subject": "Anatomy", "text": "Which cranial nerve passes through this foramen and innervates the muscle?"},
+    {"id": "physiology-1", "subject": "Physiology", "text": "What happens to cardiac output according to the Frank-Starling mechanism?"},
+    {"id": "biochemistry-1", "subject": "Biochemistry", "text": "Which coenzyme is required by this enzyme in the urea cycle?"},
+    {"id": "pathology-1", "subject": "Pathology", "text": "Biopsy of a malignant tumour shows granuloma and caseous necrosis."},
+    {"id": "pharmacology-1", "subject": "Pharmacology", "text": "What is the mechanism of action and adverse effect of furosemide?"},
+    {"id": "microbiology-1", "subject": "Microbiology", "text": "A gram-positive bacterium grows on this culture medium. Identify the pathogen."},
+    {"id": "forensic-1", "subject": "Forensic Medicine", "text": "At postmortem, rigor mortis helps estimate the cause and time of death."},
+    {"id": "psm-1", "subject": "PSM", "text": "A cohort study measures incidence and is affected by selection bias."},
+    {"id": "medicine-1", "subject": "Medicine", "text": "A patient with diabetes, hypertension and renal failure presents with chronic symptoms."},
+    {"id": "surgery-1", "subject": "Surgery", "text": "After laparoscopic cholecystectomy, which post-operative surgical complication is likely?"},
+    {"id": "obgyn-1", "subject": "Obstetrics & Gynaecology", "text": "A pregnant woman at 36 weeks gestation develops pre-eclampsia during labour."},
+    {"id": "paediatrics-1", "subject": "Paediatrics", "text": "A newborn infant has a low APGAR score and delayed developmental milestones."},
+    {"id": "orthopaedics-1", "subject": "Orthopaedics", "text": "A femur fracture with joint dislocation is treated with a plaster cast."},
+    {"id": "radiology-1", "subject": "Radiology", "text": "The radiograph and CT scan show an opacity; which contrast imaging study follows?"},
+    {"id": "anaesthesia-1", "subject": "Anaesthesia", "text": "During anaesthesia, intubation follows pre-oxygenation and laryngoscopy."},
+    {"id": "psychiatry-1", "subject": "Psychiatry", "text": "A patient with schizophrenia reports hallucinations and a fixed delusion."},
+    {"id": "dermatology-1", "subject": "Dermatology", "text": "A dermatology patient has psoriasis with a pruritic skin lesion."},
+    {"id": "ophthalmology-1", "subject": "Ophthalmology", "text": "Fundus examination shows a retinal lesion with optic disc changes and glaucoma."},
+    {"id": "ent-1", "subject": "ENT", "text": "Otitis with tympanic membrane damage causes hearing loss and tinnitus."},
+    {"id": "weak-1", "subject": None, "text": "Which of the following statements is correct?"},
+]
+
+def benchmark_report(cases=BENCHMARK_CASES):
+    """Evaluate labelled examples and return accuracy, PR, and confusion data."""
+    labels = SUBJECTS + ["Unclassified"]
+    confusion = {actual: {} for actual in labels}
+    predictions = []
+    correct = 0
+    for case in cases:
+        decision = classify(case["text"])
+        actual = case["subject"] or "Unclassified"
+        predicted = decision["subject"] or "Unclassified"
+        confusion[actual][predicted] = confusion[actual].get(predicted, 0) + 1
+        correct += actual == predicted
+        predictions.append({"id": case["id"], "actual": actual,
+                            "predicted": predicted, "correct": actual == predicted})
+    per_class = {}
+    for label in labels:
+        tp = confusion[label].get(label, 0)
+        fp = sum(row.get(label, 0) for actual, row in confusion.items() if actual != label)
+        fn = sum(n for predicted, n in confusion[label].items() if predicted != label)
+        support = sum(confusion[label].values())
+        if support or fp:
+            per_class[label] = {
+                "precision": round(tp / (tp + fp), 3) if tp + fp else 0.0,
+                "recall": round(tp / (tp + fn), 3) if tp + fn else 0.0,
+                "support": support,
+            }
+    active = list(per_class.values())
+    return {
+        "fixture_kind": "manually labelled smoke benchmark",
+        "limitations": "Synthetic representative stems; not an estimate of production precision or recall.",
+        "cases": len(cases),
+        "correct": correct,
+        "accuracy": round(correct / len(cases), 3) if cases else 0.0,
+        "macro_precision": round(sum(x["precision"] for x in active) / len(active), 3) if active else 0.0,
+        "macro_recall": round(sum(x["recall"] for x in active) / len(active), 3) if active else 0.0,
+        "per_class": per_class,
+        "confusion": {actual: row for actual, row in confusion.items() if row},
+        "predictions": predictions,
+    }
+
 def main():
     inv = inventory()
     years_data = {}
@@ -406,7 +685,11 @@ def main():
     topic_totals = {s: {} for s in SUBJECTS}
     questions = []      # per-question records for the browser
     grand_total = 0
+    grand_stats_total = 0
     grand_classified = 0
+    image_asset_paths = set()
+    image_asset_bytes = 0
+    image_asset_failures = []
 
     for yr in sorted(inv):
         counts = {s: 0 for s in SUBJECTS}
@@ -418,29 +701,98 @@ def main():
         supp = SUPPLEMENT.get(yr)
         if supp and os.path.exists(os.path.join(BASE, supp)):
             with open(os.path.join(BASE, supp), encoding="utf-8") as fh:
-                sources = [fh.read()]
+                sources = [{"filename": supp, "kind": "recall_markdown",
+                            "text": fh.read(), "pages": None, "page_count": None}]
         else:
-            sources = [read_pdf_text(os.path.join(BASE, qf))[0]
-                       for qf in inv[yr]["qp"]]
+            sources = []
+            for qf in inv[yr]["qp"]:
+                text, page_count, pages = read_pdf_text(os.path.join(BASE, qf))
+                sources.append({"filename": qf, "kind": "question_paper_pdf",
+                                "text": text, "pages": pages, "page_count": page_count})
         excluded = yr in STATS_EXCLUDE
-        for text in sources:
-            for q in extract_questions(text):
+        quality_counts = {"high": 0, "medium": 0, "low": 0}
+        image_dependent_count = 0
+        for source in sources:
+            extracted_questions = extract_questions(source["text"])
+            image_document = (fitz.open(os.path.join(BASE, source["filename"]))
+                              if source["kind"] == "question_paper_pdf" else None)
+            for extracted_index, extracted in enumerate(extracted_questions):
+                q = extracted["text"]
                 total_q += 1
-                s = classify(q)
+                decision = classify(q)
+                s = decision["subject"]
                 if s:
                     counts[s] += 1
                     classified += 1
+                quality = extraction_quality(q)
+                visual = image_dependency(q)
+                quality_counts[quality["quality"]] += 1
+                image_dependent_count += visual["dependent"]
                 # Question browser records (skip solved-compilation years).
                 if not excluded:
                     topic = classify_topic(s, q) if s else ""
                     if s:
                         topic_totals[s][topic] = topic_totals[s].get(topic, 0) + 1
                     ans = re.search(r"Answer:\s*([A-D])", q, re.I)
+                    page = page_for_offset(source["pages"], extracted["start"]) \
+                        if source["pages"] else None
                     rec = {"y": yr, "s": s or "Unclassified",
-                           "t": topic, "q": clean_q(q)}
+                           "t": topic, "q": clean_q(q),
+                           "src": source["filename"], "source_kind": source["kind"],
+                           "page": page, "qnum": extracted["number"],
+                           "page_link": (quote(source["filename"]) + f"#page={page}") if page else None,
+                           "score": decision["top_score"],
+                           "confidence": decision["confidence"],
+                           "margin": decision["margin"], "tie": decision["tie"],
+                           "threshold": decision["threshold"],
+                           "meets_threshold": decision["meets_threshold"],
+                           "scores": decision["scores"],
+                           "candidates": decision["candidates"],
+                           "image": visual["dependent"], "image_cues": visual["cues"],
+                           "image_asset": None,
+                           "extraction": quality}
+                    if visual["dependent"]:
+                        if image_document is None:
+                            image_asset_failures.append({
+                                "year": yr, "src": source["filename"],
+                                "page": page, "qnum": extracted["number"],
+                                "reason": "source_not_pdf",
+                            })
+                        elif page is None:
+                            image_asset_failures.append({
+                                "year": yr, "src": source["filename"],
+                                "page": None, "qnum": extracted["number"],
+                                "reason": "source_page_unavailable",
+                            })
+                        else:
+                            next_text = None
+                            if extracted_index + 1 < len(extracted_questions):
+                                following = extracted_questions[extracted_index + 1]
+                                following_page = page_for_offset(source["pages"], following["start"])
+                                if following_page == page:
+                                    next_text = following["text"]
+                            try:
+                                asset, disk_path, asset_meta = extract_question_image(
+                                    image_document, source["filename"], yr, page,
+                                    extracted["number"], q, next_text)
+                                rec["image_asset"] = asset
+                                rec["image_asset_meta"] = {
+                                    key: asset_meta[key] for key in
+                                    ("width", "height", "crop", "locator", "matched_words")
+                                }
+                                image_asset_paths.add(os.path.normcase(os.path.abspath(disk_path)))
+                                image_asset_bytes += asset_meta["bytes"]
+                            except Exception as exc:
+                                image_asset_failures.append({
+                                    "year": yr, "src": source["filename"],
+                                    "page": page, "qnum": extracted["number"],
+                                    "reason": "render_failed", "detail": str(exc)[:160],
+                                })
                     if ans:
                         rec["a"] = ans.group(1).upper()
                     questions.append(rec)
+            if image_document is not None:
+                image_document.close()
         files = dict(inv[yr])
         if supp and os.path.exists(os.path.join(BASE, supp)):
             files["recall"] = [supp]
@@ -450,15 +802,46 @@ def main():
             "classified": 0 if excluded else classified,
             "stats_excluded": excluded,
             "recall_source": bool(supp),
+            "denominators": {
+                "parsed_questions": total_q,
+                "classification_rate": 0 if excluded else total_q,
+                "subject_distribution": 0 if excluded else classified,
+                "trend_statistics": 0 if excluded else total_q,
+            },
+            "extraction_quality": quality_counts,
+            "image_dependent_questions": image_dependent_count,
+            "source_pages": {source["filename"]: source["page_count"] for source in sources},
             "files": files,
         }
         if not excluded:
             for s in SUBJECTS:
                 subject_totals[s] += counts[s]
+            grand_stats_total += total_q
             grand_classified += classified
         grand_total += total_q
         note = " (excluded from subject stats: solved compilation)" if excluded else ""
         print(f"{yr}: {total_q} parsed, {classified} classified{note}", file=sys.stderr)
+
+    # Delete obsolete generated JPEGs, while leaving any other assets alone.
+    for stale_path in glob.glob(os.path.join(IMAGE_ASSET_ROOT, "**", "*.jpg"), recursive=True):
+        if os.path.normcase(os.path.abspath(stale_path)) not in image_asset_paths:
+            os.remove(stale_path)
+    if os.path.isdir(IMAGE_ASSET_ROOT):
+        for directory, _, _ in os.walk(IMAGE_ASSET_ROOT, topdown=False):
+            if directory != IMAGE_ASSET_ROOT and not os.listdir(directory):
+                os.rmdir(directory)
+
+    failure_reasons = {}
+    for failure in image_asset_failures:
+        reason = failure["reason"]
+        failure_reasons[reason] = failure_reasons.get(reason, 0) + 1
+    image_asset_summary = {
+        "format": "JPEG",
+        "generated": len(image_asset_paths),
+        "bytes": image_asset_bytes,
+        "uncovered": len(image_asset_failures),
+        "uncovered_by_reason": failure_reasons,
+    }
 
     data = {
         "meta": {
@@ -466,7 +849,12 @@ def main():
             "stats_years": [y for y in sorted(years_data) if y not in STATS_EXCLUDE],
             "excluded_years": sorted(STATS_EXCLUDE),
             "grand_total_questions": grand_total,
+            "grand_stats_questions": grand_stats_total,
             "grand_classified": grand_classified,
+            "grand_unclassified": grand_stats_total - grand_classified,
+            "denominators_by_year": {
+                y: years_data[y]["denominators"] for y in sorted(years_data)
+            },
             "exam_date_2026": "2026-08-30",
         },
         "sections": SECTIONS,
@@ -474,7 +862,6 @@ def main():
         "subject_totals": subject_totals,
         "topic_totals": topic_totals,
         "years": years_data,
-        "questions": questions,
         "predictions": parse_predictions(),
     }
     out = os.path.join(BASE, "data.js")
@@ -483,10 +870,42 @@ def main():
         fh.write("window.NEET_DATA = ")
         json.dump(data, fh, ensure_ascii=False, indent=1)
         fh.write(";\n")
+    questions_out = os.path.join(BASE, "questions.json")
+    question_payload = {
+        "meta": {
+            "generated_by": "build_analysis.py",
+            "record_count": len(questions),
+            "classifier_threshold": CLASSIFIER_THRESHOLD,
+            "image_tagging": "text-cue heuristic with anchored PDF page crops",
+            "image_assets": image_asset_summary,
+            "image_asset_failures": image_asset_failures,
+        },
+        "questions": questions,
+    }
+    with open(questions_out, "w", encoding="utf-8") as fh:
+        # This file is fetched on demand in the browser; compact output keeps
+        # the transfer and JSON parse cost down without sacrificing schema.
+        json.dump(question_payload, fh, ensure_ascii=False, separators=(",", ":"))
+        fh.write("\n")
+    benchmark_out = os.path.join(BASE, "classifier_benchmark.json")
+    with open(benchmark_out, "w", encoding="utf-8") as fh:
+        json.dump({"cases": BENCHMARK_CASES, "report": benchmark_report()},
+                  fh, ensure_ascii=False, indent=1)
+        fh.write("\n")
     kb = os.path.getsize(out) // 1024
-    print(f"\nWrote {out} ({kb} KB, {len(questions)} question records)", file=sys.stderr)
-    print(f"TOTAL: {grand_total} parsed, {grand_classified} classified "
-          f"({100*grand_classified//max(grand_total,1)}%)", file=sys.stderr)
+    qkb = os.path.getsize(questions_out) // 1024
+    print(f"\nWrote {out} ({kb} KB, aggregate data only)", file=sys.stderr)
+    print(f"Wrote {questions_out} ({qkb} KB, {len(questions)} question records)", file=sys.stderr)
+    print(f"Wrote {len(image_asset_paths)} question image assets "
+          f"({image_asset_bytes / 1024 / 1024:.1f} MB); "
+          f"{len(image_asset_failures)} uncovered", file=sys.stderr)
+    print(f"Wrote {benchmark_out} ({len(BENCHMARK_CASES)} labelled cases)", file=sys.stderr)
+    print(f"TOTAL: {grand_total} parsed ({grand_stats_total} in stats), "
+          f"{grand_classified} classified "
+          f"({100*grand_classified//max(grand_stats_total,1)}%)", file=sys.stderr)
 
 if __name__ == "__main__":
-    main()
+    if "--benchmark" in sys.argv:
+        print(json.dumps(benchmark_report(), ensure_ascii=False, indent=2))
+    else:
+        main()
